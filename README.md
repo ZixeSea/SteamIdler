@@ -1,6 +1,3 @@
-# SteamIdler
-A steam idler build on steam-user
-
 # SteamIdler, for idling game time on steam.
 **This bot can be used to idle any steam game you own up to 25 game(steam limit) at a time without realy running them.**
 [<img src="https://discordapp.com/api/guilds/98834803738054656/embed.png">](https://discordapp.com/invite/bZt8WkS/)
