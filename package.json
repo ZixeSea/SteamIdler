@@ -1,0 +1,14 @@
+{
+  "name": "steam-idler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "ZixeSea",
+  "license": "MIT",
+  "dependencies": {
+    "steam-user": "^3.29.1"
+  }
+}
