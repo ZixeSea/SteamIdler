@@ -3,6 +3,7 @@
 [<img src="https://discordapp.com/api/guilds/98834803738054656/embed.png">](https://discordapp.com/invite/bZt8WkS/)
 [<img src="https://img.shields.io/badge/steam-user-blue.svg">](https://github.com/DoctorMcKay/node-steam-user/)
 [<img src="https://img.shields.io/badge/Version-1.0.0-green.svg">](https://github.com/ZixeSea/SteamIdler/)
+[<img src="https://img.shields.io/badge/In%20progress-no-red.svg">](https://animeglitch.net/)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/ZixeSea/SteamIdler/blob/master/LICENSE.md) file for details
