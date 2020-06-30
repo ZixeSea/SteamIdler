@@ -3,7 +3,7 @@
 [![Discord Badge](https://discordapp.com/api/guilds/98834803738054656/embed.png)](https://discordapp.com/invite/bZt8WkS)
 [![Discord.js Badge](https://img.shields.io/badge/steam-user-blue.svg)](https://github.com/DoctorMcKay/node-steam-user)
 [![Version Badge](https://img.shields.io/badge/Version-1.0.0-green.svg)](https://github.com/ZixeSea/SteamIdler)
-[![In progress Badge](https://img.shields.io/badge/In%20progress-no-red.svg)](https://animeglitch.net)
+[![In progress Badge](https://img.shields.io/badge/In%20progress-no-red.svg)](https://zixesea.com)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3eb8a2ad06bf4208ac94ca4ad4efe0f5)](https://www.codacy.com/app/ZixeSea/SteamIdler?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ZixeSea/SteamIdler&amp;utm_campaign=Badge_Grade)
 
 ## License
@@ -21,7 +21,7 @@ In a command prompt in your project's folder (wherever that may be) run the foll
 
 Once finished:
 
-- In the folder from where you ran the git command, run `cd SteamIdler` and then run `npm install`, this will install all required packages.
+- In the folder from where you ran the git command, run `cd SteamIdler` and then run `npm i`, this will install all required packages.
 
 - Now go to `SteamIdler/config.json` and open it, and edit the following:
   * Place your username here `username: "Username here"`
@@ -29,4 +29,4 @@ Once finished:
   * Place the ID's of the game to idle here `idle_game_id: [730,570,440]`
 >***NOTE:*** Only replace the text `Username here or Password here`, so the `""` needs to stay and the game list must look like this `[GameID,OtherGameId]
 
-- Now run the start.bat file and everything shut be fine.
+- Now run the program by running `npm .` in a command prompt.
