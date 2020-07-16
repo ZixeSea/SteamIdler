@@ -9,6 +9,6 @@
   "author": "ZixeSea",
   "license": "MIT",
   "dependencies": {
-    "steam-user": "^3.29.1"
+    "steam-user": "^4.17.0"
   }
 }
