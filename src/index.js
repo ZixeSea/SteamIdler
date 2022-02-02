@@ -1,16 +1,19 @@
 const SteamUser = require('steam-user');
-const timestamp = require('time-stamp');
 const config = require('./config/account');
+const logger = require('./utils/logger');
 const client = new SteamUser();
 const logInOptions = {
-	accountName: config.username,
-	password: config.password
+	accountName: config.accOptions.username,
+	password: config.accOptions.password
 };
 
 client.on('loggedOn', () => {
-	logger(`Logged on with account: ${config.username}.`);
+	logger(`Logged on with account: ${config.accOptions.username}.`);
 	client.setPersona(SteamUser.EPersonaState.Online);
-	client.gamesPlayed(config.idleGameId);
+	if (!config.idleOptions.randomIdleGames) {
+		client.gamesPlayed(config.idleOptions.idleGameId);
+		logger(`Now idling the games: ${config.idleOptions.idleGameId.join(', ')}.`);
+	}
 });
 
 client.on('vacBans', (bans, games) => logger(`Account has ${bans} VAC ban(s).`));
@@ -21,19 +24,3 @@ process.on('unhandledRejection', (err) => logger(`Unhandled error: ${err.message
 process.on('uncaughtException', (err) => logger(`Uncatched error: ${err.message}`, 'error'));
 
 client.logOn(logInOptions);
-
-const logger = async (message, type) => {
-	const fullMessage = `${timestamp(`YYYY/MM/DD`)} | [IDLEBOT] ${message}`;
-
-	switch (type) {
-		case 'warn':
-			console.warn(fullMessage);
-			break;
-		case 'error':
-			console.error(fullMessage);
-			break;
-		default:
-			console.info(fullMessage);
-			break;
-	}
-};
