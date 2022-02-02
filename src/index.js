@@ -1,22 +1,29 @@
 const SteamUser = require('steam-user');
-const config = require('./config/account');
 const logger = require('./utils/logger');
+const { getIdleDuration } = require('./utils/additional');
+const Game = require('./utils/Game');
 const client = new SteamUser();
+
+const accOptions = require('./config/account').accOptions;
+const idleOptions = require('./config/account').idleOptions;
 const logInOptions = {
-	accountName: config.accOptions.username,
-	password: config.accOptions.password
+	accountName: accOptions.username,
+	password: accOptions.password
 };
 
-client.on('loggedOn', () => {
-	logger(`Logged on with account: ${config.accOptions.username}.`);
+client.on('loggedOn', async () => {
+	logger(`Logged on with account: ${accOptions.username}.`);
 	client.setPersona(SteamUser.EPersonaState.Online);
-	if (!config.idleOptions.randomIdleGames) {
-		client.gamesPlayed(config.idleOptions.idleGameId);
-		logger(`Now idling the games: ${config.idleOptions.idleGameId.join(', ')}.`);
+	if (!idleOptions.randomIdleGames) {
+		logger(`Now idling ${idleOptions.idleToIdle.length} game(s) [${idleOptions.idleToIdle.join(', ')}].`);
+		return client.gamesPlayed(idleOptions.idleToIdle);
 	}
+
+	const OwnedGameList = await client.getUserOwnedApps(client.steamID, { includePlayedFreeGames: true });
+	logger(`Games list: ${OwnedGameList.app_count}.`);
 });
 
-client.on('vacBans', (bans, games) => logger(`Account has ${bans} VAC ban(s).`));
+client.on('vacBans', (bans, games) => logger(`Account has ${bans} ban(s) [${games.join(', ')}].`));
 client.on('disconnected', (result, msg) => logger(`Account disconnected, with reason: ${msg}`));
 client.on('error', (err) => logger(`Steam error: ${err}`, 'error'));
 
