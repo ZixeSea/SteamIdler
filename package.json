@@ -1,14 +1,29 @@
 {
 	"name": "steam-idler",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
+	"version": "1.0.1",
+	"description": "This is a small steam idle bot made with steam-user.",
+	"homepage": "https://github.com/ZixeSea/SteamIdler",
+	"contributors": [
+		{
+			"name": "ZixeSea",
+			"url": "https://github.com/ZixeSea"
+		}
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ZixeSea/SteamIdler.git"
+	},
+	"bugs": {
+		"url": "https://github.com/ZixeSea/SteamIdler/issues"
+	},
+	"main": "./src/index.js",
 	"scripts": {
-		"test": "node index.js"
+		"text": "node ./src/index.js"
 	},
 	"author": "ZixeSea",
 	"license": "MIT",
 	"dependencies": {
-		"steam-user": "^4.19.4"
+		"steam-user": "^4.20.2",
+		"time-stamp": "^2.2.0"
 	}
 }

@@ -3,9 +3,8 @@
 [![Discord.js Badge](https://img.shields.io/badge/steam-user-blue.svg)](https://github.com/DoctorMcKay/node-steam-user)
 [![Version Badge](https://img.shields.io/badge/Version-1.0.0-green.svg)](https://github.com/ZixeSea/SteamIdler)
 [![In progress Badge](https://img.shields.io/badge/In%20progress-no-red.svg)](https://zixesea.com)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3eb8a2ad06bf4208ac94ca4ad4efe0f5)](https://www.codacy.com/app/ZixeSea/SteamIdler?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ZixeSea/SteamIdler&amp;utm_campaign=Badge_Grade)
 
-**This bot can be used to idle any steam game you own up to 25 game(steam limit) at a time without realy running them.**
+**This bot can be used to idle any steam game you own up to 25 game (steam limit) at a time without realy running them.**
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/ZixeSea/SteamIdler/blob/master/LICENSE.md) file for details
