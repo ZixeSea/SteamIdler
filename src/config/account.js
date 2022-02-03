@@ -6,7 +6,9 @@ module.exports = {
 	},
 	idleOptions: {
 		randomIdleGames: true, // if true it will get all your games and pick random
-		randomIdleTime: 0, // if 0 it will created a random number
+		idleFreeGames: true,
+		staticIdleTime: 0, // if 0 it will created a random number (in MS)
+		blacklist: [ 700580 ], // backlist games from getting randomly idled
 		idleToIdle: [ 730, 570, 440 ] // only runs when randomIdleGames is false
 	}
 };
