@@ -1,8 +1,9 @@
 const SteamUser = require('steam-user');
 const logger = require('./utils/logger');
-const { getIdleDuration } = require('./utils/additional');
-const Game = require('./utils/Game');
+const idler = require('./utils/idler');
+const { createGameList } = require('./utils/additional');
 const client = new SteamUser();
+let gameList = [];
 
 const accOptions = require('./config/account').accOptions;
 const idleOptions = require('./config/account').idleOptions;
@@ -19,8 +20,20 @@ client.on('loggedOn', async () => {
 		return client.gamesPlayed(idleOptions.idleToIdle);
 	}
 
-	const OwnedGameList = await client.getUserOwnedApps(client.steamID, { includePlayedFreeGames: true });
-	logger(`Games list: ${OwnedGameList.app_count}.`);
+	const OwnedGameList = await client.getUserOwnedApps(client.steamID, {
+		includePlayedFreeGames: idleOptions.idleFreeGames
+	});
+	logger(`There are ${OwnedGameList.app_count} game(s) in the list.`);
+
+	createGameList(OwnedGameList.apps, gameList);
+	let idleGame = idler(client, gameList);
+
+	setInterval(() => {
+		if (idleGame.endIdle < Date.now()) {
+			logger(`Done idling "${idleGame.name}", total idle-time ${idleGame.idledFor / 60000} min.`);
+			idleGame = idler(client, gameList);
+		}
+	}, 2500);
 });
 
 client.on('vacBans', (bans, games) => logger(`Account has ${bans} ban(s) [${games.join(', ')}].`));
