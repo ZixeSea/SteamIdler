@@ -20,6 +20,10 @@ client.on('loggedOn', async () => {
 		return client.gamesPlayed(idleOptions.idleToIdle);
 	}
 
+	if (gameList.length <= 0) startIdler(client);
+});
+
+const startIdler = async (client) => {
 	const OwnedGameList = await client.getUserOwnedApps(client.steamID, {
 		includePlayedFreeGames: idleOptions.idleFreeGames
 	});
@@ -34,9 +38,11 @@ client.on('loggedOn', async () => {
 			idleGame = idler(client, gameList);
 		}
 	}, 2500);
-});
+};
 
-client.on('vacBans', (bans, games) => logger(`Account has ${bans} ban(s) [${games.join(', ')}].`));
+client.on('vacBans', (bans, games) =>
+	logger(bans === 0 ? "Accouunt doesn't have any bans." : `Account has ${bans} ban(s) [${games.join(', ')}].`)
+);
 client.on('disconnected', (result, msg) => logger(`Account disconnected, with reason: ${msg}`));
 client.on('error', (err) => logger(`Steam error: ${err}`, 'error'));
 
