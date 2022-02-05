@@ -3,7 +3,7 @@ const Game = require('./Game');
 
 module.exports = {
 	getIdleDuration: () => {
-		let random = Math.floor(Math.random() * 20 + 5);
+		let random = Math.floor(Math.random() * 20) + 5;
 		return (random *= 120000);
 	},
 	selectRandomGame: (gameList) => {
