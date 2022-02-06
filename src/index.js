@@ -24,20 +24,22 @@ client.on('loggedOn', async () => {
 });
 
 const startIdler = async (client) => {
-	const OwnedGameList = await client.getUserOwnedApps(client.steamID, {
+	const ownedGameList = await client.getUserOwnedApps(client.steamID, {
 		includePlayedFreeGames: idleOptions.idleFreeGames
 	});
-	logger(`There are ${OwnedGameList.app_count} game(s) in the list.`);
+	logger(`There are ${ownedGameList.app_count} game(s) in the list.`);
 
-	createGameList(OwnedGameList.apps, gameList);
-	let idleGame = idler(client, gameList);
+	createGameList(ownedGameList.apps, gameList);
+	let idleGames = await idler(client, gameList);
 
-	setInterval(() => {
-		if (idleGame.endIdle < Date.now()) {
-			logger(`Done idling "${idleGame.name}", total idle-time ${idleGame.idledFor / 60000} min.`);
-			idleGame = idler(client, gameList);
-		}
-	}, 2500);
+	if (!idleGames.isAllGames) {
+		setInterval(async () => {
+			if (idleGames.endIdle < Date.now()) {
+				logger(`Done idling "${idleGames.games.join(', ')}", idled for ${idleGames.idleTime / 60000} min.`);
+				idleGames = await idler(client, gameList);
+			}
+		}, 2500);
+	}
 };
 
 client.on('vacBans', (bans, games) =>
