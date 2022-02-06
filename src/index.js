@@ -14,7 +14,7 @@ const logInOptions = {
 
 client.on('loggedOn', async () => {
 	logger(`Logged on with account: ${accOptions.username}.`);
-	client.setPersona(SteamUser.EPersonaState.Online);
+	client.setPersona(accOptions.statusInvisible ? SteamUser.EPersonaState.Invisible : SteamUser.EPersonaState.Online);
 	if (!idleOptions.randomIdleGames) {
 		logger(`Now idling ${idleOptions.idleToIdle.length} game(s) [${idleOptions.idleToIdle.join(', ')}].`);
 		return client.gamesPlayed(idleOptions.idleToIdle);
