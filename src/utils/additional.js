@@ -10,9 +10,10 @@ module.exports = {
 		let random = Math.floor(Math.random() * gameList.length);
 		return gameList[random];
 	},
-	createGameList: (games, gameList) => {
+	createGameList: (games, gameList, bannedGameList) => {
+		const excludeGamesList = [].concat(blacklistGames, bannedGameList);
 		games.forEach((g) => {
-			if (!blacklistGames.includes(g.appid)) {
+			if (!excludeGamesList.includes(g.appid)) {
 				gameList.push(new Game(g.name, g.appid, g.playtime_forever));
 			}
 		});

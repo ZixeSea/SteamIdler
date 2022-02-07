@@ -5,6 +5,7 @@ const { createGameList } = require('./utils/additional');
 const evn = require('../package.json');
 const logo = require('asciiart-logo');
 const client = new SteamUser();
+let bannedGameList = [];
 let gameList = [];
 
 const accOptions = require('./config/account').accOptions;
@@ -44,7 +45,7 @@ const startIdler = async (client) => {
 	});
 	logger(`There are ${ownedGameList.app_count} game(s) in the list.`);
 
-	createGameList(ownedGameList.apps, gameList);
+	createGameList(ownedGameList.apps, gameList, bannedGameList);
 	let idleGames = await idler(client, gameList);
 
 	if (!idleGames.isAllGames) {
@@ -57,9 +58,11 @@ const startIdler = async (client) => {
 	}
 };
 
-client.on('vacBans', (bans, games) =>
-	logger(bans === 0 ? "Accouunt doesn't have any bans." : `Account has ${bans} ban(s) [${games.join(', ')}].`)
-);
+client.on('vacBans', (bans, games) => {
+	if (idleOptions.SkipBannedGames) bannedGameList = games;
+	logger(bans === 0 ? "Accouunt doesn't have any bans." : `Account has ${bans} ban(s) [${games.join(', ')}].`);
+});
+
 client.on('disconnected', (result, msg) => logger(`Account disconnected, with reason: ${msg}`));
 client.on('error', (err) => logger(`Steam error: ${err}`, 'error'));
 
