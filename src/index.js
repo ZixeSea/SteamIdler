@@ -2,6 +2,8 @@ const SteamUser = require('steam-user');
 const logger = require('./utils/logger');
 const idler = require('./utils/idler');
 const { createGameList } = require('./utils/additional');
+const evn = require('../package.json');
+const logo = require('asciiart-logo');
 const client = new SteamUser();
 let gameList = [];
 
@@ -11,6 +13,19 @@ const logInOptions = {
 	accountName: accOptions.username,
 	password: accOptions.password
 };
+
+console.info(
+	logo({
+		name: 'SteamIdler',
+		font: 'Big',
+		padding: 5,
+		margin: 3
+	})
+		.emptyLine()
+		.center(`Version: ${evn.version}`)
+		.center(`Created by: ${evn.contributors[0].name}`)
+		.render()
+);
 
 client.on('loggedOn', async () => {
 	logger(`Logged on with account: ${accOptions.username}.`);
