@@ -43,11 +43,12 @@ const startIdler = async (client) => {
 	const ownedGameList = await client.getUserOwnedApps(client.steamID, {
 		includePlayedFreeGames: idleOptions.idleFreeGames
 	});
-	logger(`There are ${ownedGameList.app_count} game(s) in the list.`);
+	logger(`This account owns ${ownedGameList.app_count} game(s).`);
 
 	createGameList(ownedGameList.apps, gameList, bannedGameList);
-	let idleGames = await idler(client, gameList);
+	if (gameList.length <= 0) return logger(`There are no games to idle.`);
 
+	let idleGames = await idler(client, gameList);
 	if (!idleGames.isAllGames) {
 		setInterval(async () => {
 			if (idleGames.endIdle < Date.now()) {
