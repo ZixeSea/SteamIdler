@@ -32,6 +32,11 @@ client.on('loggedOn', async () => {
 	logger(`Logged on with account: ${accOptions.username}.`);
 	client.setPersona(accOptions.statusInvisible ? SteamUser.EPersonaState.Invisible : SteamUser.EPersonaState.Online);
 	if (!idleOptions.randomIdleGames) {
+		if (idleOptions.idleToIdle <= 0 || idleOptions.idleToIdle > 30)
+			return logger(
+				`Idle list is to ${idleOptions.idleToIdle > 30 ? 'long' : 'short'}, use between 1 and 30 games.`
+			);
+
 		logger(`Now idling ${idleOptions.idleToIdle.length} game(s) [${idleOptions.idleToIdle.join(', ')}].`);
 		return client.gamesPlayed(idleOptions.idleToIdle);
 	}
