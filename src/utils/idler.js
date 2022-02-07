@@ -9,7 +9,7 @@ module.exports = async (client, gameList) => {
 			? idleOptions.staticIdleTime < 60000 ? 60000 : idleOptions.staticIdleTime
 			: getIdleDuration();
 	let parallelCount =
-		idleOptions.parallelGameIdle <= 1 ? 1 : idleOptions.parallelGameIdle > 25 ? 25 : idleOptions.parallelGameIdle;
+		idleOptions.parallelGameIdle <= 1 ? 1 : idleOptions.parallelGameIdle > 30 ? 30 : idleOptions.parallelGameIdle;
 	const endIdle = Date.now() + idleTime;
 
 	if (gameList.length < parallelCount) parallelCount = gameList.length;
