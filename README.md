@@ -1,5 +1,5 @@
-<h1>SteamIlder</h1>
-<strong>Extremly light idler for steam that can easily run 24/7.</strong><br>
+<h1>SteamIdler</h1>
+<strong>Extremely light idler for steam that can easily run 24/7.</strong><br>
 <a href="https://discord.com/invite/bZt8WkS">
   <img src="https://discord.com/api/guilds/98834803738054656/embed.png" alt="discord server"/>
 </a>
