@@ -32,8 +32,8 @@ client.on('loggedOn', async () => {
 	logger(`Logged on with account: ${accOptions.username}.`);
 	client.setPersona(accOptions.statusInvisible ? SteamUser.EPersonaState.Invisible : SteamUser.EPersonaState.Online);
 	if (!idleOptions.randomIdleGames) {
-		if (idleOptions.idleToIdle <= 0 || idleOptions.idleToIdle > 32)
-			return logger(`Idle list is to ${idleOptions.idleToIdle > 32 ? 'long' : 'short'}, use between 1 and 32 games.`);
+		if (idleOptions.idleToIdle.length <= 0 || idleOptions.idleToIdle.length > 32)
+			return logger(`Idle list is too ${idleOptions.idleToIdle.length > 32 ? 'long' : 'short'}, use between 1 and 32 games.`);
 
 		logger(`Now idling ${idleOptions.idleToIdle.length} game(s) [${idleOptions.idleToIdle.join(', ')}].`);
 		return client.gamesPlayed(idleOptions.idleToIdle);
@@ -64,7 +64,7 @@ const startIdler = async (client) => {
 
 client.on('vacBans', (bans, games) => {
 	if (idleOptions.SkipBannedGames) bannedGameList = games;
-	logger(bans === 0 ? "Accouunt doesn't have any bans." : `Account has ${bans} ban(s) [${games.join(', ')}].`);
+	logger(bans === 0 ? "Account doesn't have any bans." : `Account has ${bans} ban(s) [${games.join(', ')}].`);
 });
 
 client.on('disconnected', (result, msg) => logger(`Account disconnected, with reason: ${msg}`));
