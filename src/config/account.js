@@ -11,6 +11,6 @@ module.exports = {
 		staticIdleTime: 0,
 		blacklist: [],
 		SkipBannedGames: false,
-		idleToIdle: [ 730, 570, 440 ]
+		listToIdle: [ 730, 570, 440 ]
 	}
 };

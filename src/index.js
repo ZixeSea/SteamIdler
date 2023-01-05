@@ -32,11 +32,11 @@ client.on('loggedOn', async () => {
 	logger(`Logged on with account: ${accOptions.username}.`);
 	client.setPersona(accOptions.statusInvisible ? SteamUser.EPersonaState.Invisible : SteamUser.EPersonaState.Online);
 	if (!idleOptions.randomIdleGames) {
-		if (idleOptions.idleToIdle.length <= 0 || idleOptions.idleToIdle.length > 32)
-			return logger(`Idle list is too ${idleOptions.idleToIdle.length > 32 ? 'long' : 'short'}, use between 1 and 32 games.`);
+		if (idleOptions.listToIdle.length <= 0 || idleOptions.listToIdle.length > 32)
+			return logger(`Idle list is too ${idleOptions.listToIdle.length > 32 ? 'long' : 'short'}, use between 1 and 32 games.`);
 
-		logger(`Now idling ${idleOptions.idleToIdle.length} game(s) [${idleOptions.idleToIdle.join(', ')}].`);
-		return client.gamesPlayed(idleOptions.idleToIdle);
+		logger(`Now idling ${idleOptions.listToIdle.length} game(s) [${idleOptions.listToIdle.join(', ')}].`);
+		return client.gamesPlayed(idleOptions.listToIdle);
 	}
 
 	if (gameList.length <= 0) startIdler(client);

@@ -85,13 +85,13 @@ In the config file, there are 2 really important things that must be changed fir
 
 Than there are sme addicinal thing you can config/change to make the idler work how you want it, and does are\
 `statusInvisible` If this is set to **true** it will show your account as offline instead of online\
-`randomIdleGames` If set to **true**, **idleToIdle** won't be used and it will randomly idle games\
+`randomIdleGames` If set to **true**, **listToIdle** won't be used and it will randomly idle games\
 `idleFreeGames` If set to **true** the **randomIdleGames** will includes free to play games\
 `parallelGameIdle` The number of games it should idle at ones if using **randomIdleGames** (can been between 0 and 32)\
 `staticIdleTime` If set to **0** it will create a random number, else it will use this number (number must be in MS)\
 `blacklist` A list of games you don't want to idle if using **randomIdleGames** (use game IDs here)\
 `SkipBannedGames` If set to **true** it won't idle games your banned in while using **randomIdleGames**\
-`idleToIdle` Static list of games to idle, only gets used if **randomIdleGames** is **false**
+`listToIdle` Static list of games to idle, only gets used if **randomIdleGames** is **false**
 
 Hereunder is an example config:
 ```
@@ -107,7 +107,7 @@ idleOptions: {
 	staticIdleTime: 0,
 	blacklist: [],
 	SkipBannedGames: false,
-	idleToIdle: [ 730, 570, 440 ]
+	listToIdle: [ 730, 570, 440 ]
 }
 ```
 
