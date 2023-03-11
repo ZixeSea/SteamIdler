@@ -24,7 +24,7 @@
 	"license": "MIT",
 	"dependencies": {
 		"asciiart-logo": "^0.2.7",
-		"steam-user": "^4.26.0",
+		"steam-user": "^4.27.1",
 		"time-stamp": "^2.2.0"
 	}
 }
