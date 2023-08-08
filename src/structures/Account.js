@@ -1,15 +1,15 @@
+const Game = require('./Game');
+
 class Account {
   constructor(data) {
-    this.isOnline = false;
     this.name = data.name;
     this.gamesCount = 0;
-    this.bannedGames = [];
-    this.blacklistedGames = [];
+    this.gameBans = [];
 
     this.games = [];
 
     this.idleStartTime = NaN;
-    this.idleStatus = 'Unknown';
+    this.idleStatus = data.status;
   }
 
   update(data) {
@@ -17,14 +17,12 @@ class Account {
     if (data.status) this.idleStatus = data.status;
   }
 
-  login() {
-    // todo: steam login code
-    this.isOnline = true;
+  loadGames() {
+    // todo: create games list
   }
 
-  loadGames() {
-    if (this.isOnline) return console.error(`Account not online`);
-    // todo: steam login code
+  setBanned(gameIds) {
+    this.gameBans = gameIds;
   }
 }
 

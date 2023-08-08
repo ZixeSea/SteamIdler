@@ -1,10 +1,19 @@
 const cluster = require('node:cluster');
 
+process.on('unhandledRejection', (err) => console.error(`Unhandled error: ${err.message}`, 'error'));
+process.on('uncaughtException', (err) => console.error(`Uncatched error: ${err.message}`, 'error'));
+
 if (cluster.isPrimary) {
   const startWorkers = async () => {
     const manager = await require('./sharding/manager');
-    const test = manager.get(1);
-    test.worker.send(`This is a message from master to worker ${test.id}`);
+    for (const Worker of manager.values()) {
+      if (Worker.id === 1) Worker.worker.send({ name: 'login', config: Worker.config });
+      await new Promise((resolve, reject) => {
+        cluster.once('message', function (worker, message) {
+          if (worker.id === Worker.id && message.name === 'login') resolve();
+        });
+      });
+    }
   };
 
   const evn = require('../package.json');
