@@ -2,7 +2,6 @@ module.exports = {
   account: {
     username: 'something',
     password: 'something',
-    steamGuard: false, // Set to "true" if your account uses it
     statusInvisible: false // If set to "true" friends will get notifications
   },
   idlerSettings: {
@@ -13,7 +12,7 @@ module.exports = {
     enabled: false, // Idle static list of games
     listToIdle: [] // 730, 570, 440
   },
-  dynamicIlder: {
+  dynamicIdler: {
     enabled: false, // Idle random list of games
     skipBannedGames: false,
     skipFreeGames: false,

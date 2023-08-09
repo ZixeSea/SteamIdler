@@ -17,8 +17,13 @@ class Account {
     if (data.status) this.idleStatus = data.status;
   }
 
-  loadGames() {
-    // todo: create games list
+  loadGames(gamesList, blacklistGames) {
+    const excludeGamesList = [].concat(blacklistGames, this.gameBans);
+    gamesList.forEach((g) => {
+      if (!excludeGamesList.includes(g.appid)) {
+        this.games.push(new Game(g));
+      }
+    });
   }
 
   setBanned(gameIds) {
