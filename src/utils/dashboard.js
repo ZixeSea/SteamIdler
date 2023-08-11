@@ -21,7 +21,7 @@ module.exports = (stats) => {
       time: a.idleStartTime === NaN ? 'None' : `${startTimeToHours(a.idleStartTime)} h`,
       games: a.gamesIdled,
       rounds: a.idleRounds,
-      status: 'Ideling'
+      status: a.idleStatus
     });
   });
 
