@@ -28,7 +28,7 @@ const startIdler = (account, client, config) => {
   const idleLength =
     config.idlerSettings.staticIdleTime !== 0 ? changeMinToMs(config.idlerSettings.staticIdleTime) : getIdleDuration();
   const listToIdle = gamePicker(account.games, config.idlerSettings.parallelGameIdle, idleLength);
-  if (account.status !== 'Idling!') account.update({ time: Date.now(), status: 'Idling!' });
+  if (account.idleStartTime !== 'Idling!') account.update({ time: Date.now(), status: 'Idling!' });
 
   account.addRound(listToIdle.length);
   client.gamesPlayed(listToIdle);
@@ -39,7 +39,7 @@ const startIdler = (account, client, config) => {
 };
 
 const stopIdler = (account) => {
-  account.update({ status: 'Idle paused' });
+  account.update({ status: 'Idle stopped', idled: true });
   clearTimeout(gameSwitcher);
 };
 

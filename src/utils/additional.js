@@ -9,8 +9,7 @@ module.exports = {
   changeMsToMin: (ms) => {
     return ms / 1000 / 60;
   },
-  startTimeToHours: (startTime) => {
-    const timePassed = Date.now() - startTime;
+  startTimeToHours: (timePassed) => {
     const sec = Math.floor(timePassed / 1000);
     const min = Math.floor(sec / 60);
     return (min / 60).toFixed(2);

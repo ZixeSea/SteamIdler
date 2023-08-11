@@ -18,7 +18,12 @@ module.exports = (stats) => {
     t1.addRow({
       name: a.name,
       list: a.gamesCount,
-      time: a.idleStartTime === NaN ? 'None' : `${startTimeToHours(a.idleStartTime)} h`,
+      time:
+        a.idleStartTime === NaN
+          ? '0.00 H'
+          : a.idleStartTime !== 'Idling!'
+          ? `${startTimeToHours(a.idledForTime)} H`
+          : `${startTimeToHours(a.IdleTimeInMs())} H`,
       games: a.gamesIdled,
       rounds: a.idleRounds,
       status: a.idleStatus

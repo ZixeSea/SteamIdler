@@ -11,12 +11,18 @@ class Account {
     this.idleRounds = 0;
     this.gamesIdled = 0;
     this.idleStartTime = NaN;
+    this.idledForTime = NaN;
     this.idleStatus = data.status;
   }
 
   update(data) {
     if (data.time) this.idleStartTime = data.time;
     if (data.status) this.idleStatus = data.status;
+    if (data.idled) this.idledForTime = Date.now() - this.idleStartTime;
+  }
+
+  IdleTimeInMs() {
+    return Date.now() - this.idleStartTime;
   }
 
   addRound(games) {
