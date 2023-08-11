@@ -1,19 +1,25 @@
 const cluster = require('node:cluster');
+const bashboard = require('./utils/dashboard');
+const stats = new Map();
 
-process.on('unhandledRejection', (err) => console.error(`Unhandled error: ${err.message}`, 'error'));
-process.on('uncaughtException', (err) => console.error(`Uncatched error: ${err.message}`, 'error'));
+process.on('unhandledRejection', (err) => console.error(`Unhandled error: ${err.message}`, err.stack));
+process.on('uncaughtException', (err) => console.error(`Uncatched error: ${err.message}`, err.stack));
 
 if (cluster.isPrimary) {
   const startWorkers = async () => {
     const manager = await require('./sharding/manager');
     for (const Worker of manager.values()) {
-      if (Worker.id === 1) Worker.worker.send({ name: 'login', config: Worker.config });
+      Worker.worker.send({ name: 'login', config: Worker.config });
       await new Promise((resolve, reject) => {
         cluster.once('message', function (worker, message) {
           if (worker.id === Worker.id && message.name === 'login') resolve();
         });
       });
     }
+
+    setInterval(() => {
+      bashboard(stats);
+    }, 60000);
   };
 
   const evn = require('../package.json');
@@ -33,6 +39,11 @@ if (cluster.isPrimary) {
   );
 
   startWorkers();
+  cluster.on('message', (worker, message) => {
+    if (message.name === 'stats') {
+      stats.set(worker, message.account);
+    }
+  });
 } else {
   require('./sharding/worker')();
 }

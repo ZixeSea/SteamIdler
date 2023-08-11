@@ -1,3 +1,5 @@
+const { changeMsToMin } = require('../utils/additional');
+
 class Game {
   constructor(data) {
     this.id = data.appid;
@@ -5,13 +7,14 @@ class Game {
     this.timePlayed = data.playtime_forever;
 
     this.idleCount = 0;
-    this.idleTime = 0;
+    this.idledFor = 0;
   }
 
   update(time) {
+    const timeInMin = changeMsToMin(time);
     this.idleCount++;
-    this.idledFor += time;
-    this.timePlayed += time / 60000;
+    this.idledFor += timeInMin;
+    this.timePlayed += timeInMin;
   }
 }
 

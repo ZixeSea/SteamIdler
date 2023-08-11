@@ -8,6 +8,8 @@ class Account {
 
     this.games = [];
 
+    this.idleRounds = 0;
+    this.gamesIdled = 0;
     this.idleStartTime = NaN;
     this.idleStatus = data.status;
   }
@@ -17,13 +19,19 @@ class Account {
     if (data.status) this.idleStatus = data.status;
   }
 
+  addRound(games) {
+    this.idleRounds++;
+    this.gamesIdled += games;
+  }
+
   loadGames(gamesList, blacklistGames) {
-    const excludeGamesList = [].concat(blacklistGames, this.gameBans);
+    const excludeGamesList = !blacklistGames ? [] : [].concat(blacklistGames, this.gameBans);
     gamesList.forEach((g) => {
       if (!excludeGamesList.includes(g.appid)) {
         this.games.push(new Game(g));
       }
     });
+    this.gamesCount = gamesList.length;
   }
 
   setBanned(gameIds) {

@@ -5,10 +5,9 @@ let gameSwitcher;
 const loadIdler = async (account, client, config) => {
   if (account.games.length < 1) {
     const gameListToIdle = await client.getUserOwnedApps(client.steamID, {
-      includePlayedFreeGames: true,
-      filterAppids: config.staticIdler.listToIdle
+      includePlayedFreeGames: !config.dynamicIdler.skipFreeGames
     });
-    account.loadGames(gameListToIdle.apps);
+    account.loadGames(gameListToIdle.apps, config.dynamicIdler.blacklistGames);
   }
 
   startIdler(account, client, config);

@@ -3,6 +3,8 @@ const SteamUser = require('steam-user');
 const Account = require('../structures/Account');
 const client = new SteamUser();
 
+let idler;
+let statsPusher;
 let config = null;
 let account = null;
 
@@ -31,7 +33,7 @@ module.exports = () => {
     );
 
     if (!config.staticIdler.enabled && !config.dynamicIdler.enabled) {
-      account.update({ time: NaN, status: 'Not idling' });
+      account.update({ status: 'Not idling' });
       return logger.warn(`Both idle options are turned off for ${account.name}, it will be online without idling`);
     }
 
@@ -55,26 +57,62 @@ module.exports = () => {
         logger.warn(`dynamicIdler and staticIdler is on for ${account.name}, picked dynamicIdler.`);
       }
 
-      require('../idlers/dynamicIdler')(account, client, config);
+      idler = require('../idlers/dynamicIdler');
+      idler.load(account, client, config);
+
+      statsPusher = setInterval(() => {
+        return process.send({ name: 'stats', account });
+      }, 60000);
+
       return logger.info(`The idler dynamicIdler will now be started for ${account.name}.`);
     }
 
     if (config.staticIdler.enabled) {
       if (config.staticIdler.listToIdle.length < 1) {
-        account.update({ time: NaN, status: 'Not idling' });
-        logger.warn(`listToIdle but no games provided for ${account.name}, it won't idle.`);
+        account.update({ status: 'Not idling' });
+        return logger.warn(`listToIdle but no games provided for ${account.name}, it won't idle.`);
       }
 
-      require('../idlers/staticIdler')(account, client, config);
+      idler = require('../idlers/staticIdler');
+      idler.load(account, client, config);
+
+      statsPusher = setInterval(() => {
+        return process.send({ name: 'stats', account });
+      }, 60000);
+
       return logger.info(`The idler staticIdler will now be started for ${account.name}.`);
     }
   });
 
   client.on('vacBans', (bans, gameIds) => {
-    if (config.dynamicIdler.enabled && config.dynamicIdler.skipBannedGames) account.setBanned(gameIds);
-    logger.info(bans === 0 ? `${account.name} doesn't have any bans.` : `${account.name} has ${bans} game/vac ban(s).`);
+    account.setBanned(gameIds);
+    logger.info(
+      bans === 0
+        ? `${account.name} doesn't have any game/vac bans.`
+        : `${account.name} has ${bans} game/vac ban(s) [${gameIds.join(', ')}].`
+    );
   });
 
-  client.on('disconnected', (result, msg) => logger.error(`${account.name} has disconnected, with reason: ${msg}`));
-  client.on('error', (err) => logger.error(`Steam error for ${account.name}: ${err}`));
+  client.on('disconnected', (result, msg) => {
+    idler.stop(account);
+    setTimeout(() => {
+      clearInterval(statsPusher);
+    }, 61000);
+    account.update({ status: 'Disconnected' });
+    logger.error(`${account.name} has disconnected, with reason: ${msg}`);
+  });
+
+  client.on('error', (err) => {
+    idler.stop(account);
+    setTimeout(() => {
+      clearInterval(statsPusher);
+    }, 61000);
+    if (err.message.includes('LoggedInElsewhere')) {
+      account.update({ status: 'Session taken' });
+      return logger.error(`Session from ${account.name} got taken from another location`);
+    }
+
+    account.update({ status: 'Steam error' });
+    logger.error(`Steam error for ${account.name}: ${err}`);
+  });
 };
