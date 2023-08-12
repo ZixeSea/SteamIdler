@@ -1,8 +1,8 @@
 <p align="center">
-    <h1 style="text-align: center; font-size: 65px;">STEAMIDLER V2</h1>
+    <strong style="text-align:center; font-size:180px">STEAMIDLER V2</strong>
 </p>
 <p align="center">
-  <strong style="text-align: center;">Light weight multi account steam idler</strong>
+  Light weight multi account steam idler
 </p>
 <p align="center">
   <a href="https://discord.com/invite/vE8qKNV">
