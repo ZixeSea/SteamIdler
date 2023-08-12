@@ -19,7 +19,7 @@ if (cluster.isPrimary) {
 
     setInterval(() => {
       bashboard(stats);
-    }, 60000);
+    }, 15000);
   };
 
   const evn = require('../package.json');
