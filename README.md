@@ -118,7 +118,7 @@ You can find the config file(s) in the config folder (`src/config`), every accou
 **- account (REQUIRED)**
 `username` | String | The username from the steam account
 `username` | String | The username from the steam account
-`statusInvisible` | Boolean | If "true" friends will see notification
+`statusInvisible` | Boolean | If "true" friends won't see notification or you playing anything
 **- idlerSettings**
 `parallelGameIdle` | Number | Number of games to play at ones (32 is max)
 `staticIdleTime` | Number | Time to idle until switching to other games (0 is random number)
