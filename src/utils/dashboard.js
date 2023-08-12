@@ -20,10 +20,10 @@ module.exports = (stats) => {
       list: a.gamesCount,
       time:
         a.idleStartTime === NaN
-          ? '0.00 H'
-          : a.idleStartTime !== 'Idling!'
-          ? `${startTimeToHours(a.idledForTime)} H`
-          : `${startTimeToHours(a.IdleTimeInMs())} H`,
+          ? 'Unknown'
+          : a.idleStatus !== 'Idling!'
+          ? `${startTimeToHours(a.stoppedIdleTime)} H`
+          : `${startTimeToHours(Date.now() - a.idleStartTime)} H`,
       games: a.gamesIdled,
       rounds: a.idleRounds,
       status: a.idleStatus

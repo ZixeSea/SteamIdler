@@ -40,7 +40,8 @@ const startIdler = (account, client, config) => {
 };
 
 const stopIdler = (account) => {
-  account.update({ status: 'Idle stopped', idled: true });
+  account.setStoppedTime();
+  account.update({ status: 'Idle stopped' });
   clearTimeout(gameSwitcher);
 };
 
