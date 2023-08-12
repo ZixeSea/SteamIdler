@@ -1,22 +1,22 @@
-const blacklistGames = require('../config/account').idleOptions.blacklist;
-const Game = require('./Game');
-
 module.exports = {
   getIdleDuration: () => {
-    let random = Math.floor(Math.random() * 20) + 5;
-    return (random *= 120000);
+    let random = Math.floor(Math.random() * 6) + 5;
+    return (random *= 240000) + 600000;
+  },
+  changeMinToMs: (min) => {
+    return min * 60 * 1000;
+  },
+  changeMsToMin: (ms) => {
+    return ms / 1000 / 60;
+  },
+  startTimeToHours: (timePassed) => {
+    const sec = Math.floor(timePassed / 1000);
+    const min = Math.floor(sec / 60);
+    return (min / 60).toFixed(2);
   },
   selectRandomGame: (gameList) => {
     let random = Math.floor(Math.random() * gameList.length);
     return gameList[random];
-  },
-  createGameList: (games, gameList, bannedGameList) => {
-    const excludeGamesList = [].concat(blacklistGames, bannedGameList);
-    games.forEach((g) => {
-      if (!excludeGamesList.includes(g.appid)) {
-        gameList.push(new Game(g.name, g.appid, g.playtime_forever));
-      }
-    });
   },
   timeout: (time) => {
     return new Promise((resolve) => setTimeout(resolve, time));
