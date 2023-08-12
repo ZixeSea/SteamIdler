@@ -28,6 +28,7 @@ module.exports = () => {
       return process.send({ name: 'login' });
     }, 5000);
 
+    process.send({ name: 'stats', account });
     client.setPersona(
       config.account.statusInvisible ? SteamUser.EPersonaState.Invisible : SteamUser.EPersonaState.Online
     );
@@ -78,7 +79,7 @@ module.exports = () => {
 
       statsPusher = setInterval(() => {
         return process.send({ name: 'stats', account });
-      }, 60000);
+      }, 30000);
 
       return logger.info(`The idler staticIdler will now be started for ${account.name}.`);
     }
