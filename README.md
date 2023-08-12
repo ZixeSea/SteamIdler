@@ -1,179 +1,181 @@
-<h1>SteamIdler</h1>
-<strong>Extremely light idler for steam that can easily run 24/7.</strong><br>
-<a href="https://discord.com/invite/bZt8WkS">
-  <img src="https://discord.com/api/guilds/98834803738054656/embed.png" alt="discord server"/>
-</a>
+<p align="center">
+    <h1 style="text-align: center; font-size: 65px;">STEAMIDLER V2</h1>
+</p>
+<p align="center">
+  <strong style="text-align: center;">Light weight multi account steam idler</strong>
+</p>
+<p align="center">
+  <a href="https://discord.com/invite/vE8qKNV">
+    <img src="https://discord.com/api/guilds/98834803738054656/embed.png" alt="Discord sercver"/>
+  </a>
 <a href="https://github.com/DoctorMcKay/node-steam-user">
   <img src="https://img.shields.io/badge/Steam-user-blue.svg" alt="Steam user badge"/>
 </a>
 <a href="https://github.com/ZixeSea/SteamIdler">
-  <img src="https://img.shields.io/badge/Version-1.1.0-green.svg" alt="Version Badge"/>
+  <img src="https://img.shields.io/badge/Version-2.0.0-green.svg" alt="Version Badge"/>
 </a>
 <a href="https://github.com/ZixeSea/SteamIdler/blob/master/LICENSE.md">
   <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="Version Badge"/>
 </a>
+</p>
 
----
+## Authors
 
-## **General information**
+- **ZixeSea** - _Lead developer_ - github: [ZixeSea](https://github.com/ZixeSea)
 
-### **Author**
+## The project
 
-**ZixeSea#1234** - _Lead developer_ - github: [ZixeSea](https://github.com/ZixeSea)
+This project has been created in _2019_ for me to easily run a **steam idler 24/7** in the background while using **almost no resources**. this project has been reworked in _2022_ adding a lot of new options like the "**staticIdler**" and "**dynamicIdler**" idlers. The only thing that was missing was **multi account support**. This has been added in the rewrite from _2023_ and now known as SteamIdler V2.
 
-### **The project**
+## Requirements
 
-This project has been created for me to easily run a steam idler 24/7 in the background without using many resources. this project has been put on hold for a long time until some people contacted me about it and because of it, I rewrote everything at 2022. With this rewrite, I also added things like randomGameIdle, randomTimeIdle, and parallelGameIdle up to 32 games at once (before it idled just a static list of games).
+- `git` command line ([Windows](https://git-scm.com/download/win)|[Linux](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)|[MacOS](https://git-scm.com/download/mac)) installed
+- `node` version 8.0.0 or higher ([get here](https://nodejs.org))
 
-### **Required dependencies**
+> If you have 2AF on for you steam account, you need to provide it while the program is starting. A message will appear about it.
 
-[steam-user](https://www.npmjs.com/package/steam-user) - Allows interaction with the Steam network via the Steam client protocol.\
-[time-stamp](https://www.npmjs.com/package/time-stamp) - Get a formatted timestamp.\
-[asciiart-logo](https://www.npmjs.com/package/asciiart-logo) - renders a splash screen in text console with logo from ASCII characters.
+## Download code
 
-### **License**
-
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/ZixeSea/SteamIdler/blob/master/LICENSE.md) file for details (deleting and/or modifying the license file after forking isn't allowed).
-
----
-
-## **Table of contents**
-
-**1\.** [Preparations](#preparations)\
-&nbsp;&nbsp;&nbsp;&nbsp;**1\.1.** [Requirements](#requirements)\
-&nbsp;&nbsp;&nbsp;&nbsp;**1\.2.** [Get code](#get-code)
-<br>
-
-**2\.** [Config](#config)\
-&nbsp;&nbsp;&nbsp;&nbsp;**2\.1.** [Idler config](#idler-config)\
-&nbsp;&nbsp;&nbsp;&nbsp;**2\.2.** [PM2 config](#pm2-config)
-<br>
-
-**3\.** [Linux](#linux)\
-&nbsp;&nbsp;&nbsp;&nbsp;**3\.1.** [Update system (L)](#update-system-l)\
-&nbsp;&nbsp;&nbsp;&nbsp;**3\.2.** [Install Node.js (L)](#install-nodejs-l)\
-&nbsp;&nbsp;&nbsp;&nbsp;**3\.3.** [Start the bot (L)](#start-the-bot-l)
-<br>
-
-**4\.** [Windows](#windows)\
-&nbsp;&nbsp;&nbsp;&nbsp;**4\.1.** [Install Node.js (W)](#install-nodejs-w)\
-&nbsp;&nbsp;&nbsp;&nbsp;**4\.2.** [Start the bot (W)](#start-the-bot-w)
-
----
-
-## **Preparations**
-
-### **Requirements**
-
-`git` command line ([Windows](https://git-scm.com/download/win)|[Linux](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)|[MacOS](https://git-scm.com/download/mac))\
-`node` version 14.17.3 or higher (**expained later**)\
-`Steam` account is also required ([get here](https://store.steampowered.com/))
-<br><br>
-
-> ⚠️ WARNING ⚠️<br>If you have 2AF on for you steam account, you need to provide that too and app will ask for it while starting.
-
-### **Get code**
-
-Run the following command in a CMD/terminal window in the location where you want the folder to be.
+Run the following command in a CMD/terminal at the location where you want to download it:
 
 ```
 git clone https://github.com/ZixeSea/SteamIdler.git
 ```
 
-<br>
+> Remember to go in to the config folder and chnage/add a config file (for example: **`src/config/account1.js`**). The name of the config file doesn't matter but every account should have it's own config file.
 
-> ⚠️ WARNING ⚠️<br>Remember to change the config file after getting the code otherwise, it won't work ([more info here](###Config)).
+## Dependencies
 
----
+- [steam-user](https://www.npmjs.com/package/steam-user) - Allows interaction with the Steam network via the Steam client protocol
+- [asciiart-logo](https://www.npmjs.com/package/asciiart-logo) - renders a splash screen in text console with logo from ASCII characters.
+- [colors](https://www.npmjs.com/package/colors) - get color and style in your node.js console
+- [console-table-printer](https://www.npmjs.com/package/console-table-printer) - Printing Simple Table with Coloring rows on your console. Its useful when you want to present some tables on console using js.
+- [time-stamp](https://www.npmjs.com/package/time-stamp) - Get a formatted timestamp.
 
-## **Config**
+## License
 
-### **Idler config**
-
-You can find the config file in the folder that was created in the previous step (["this one"](###Get-code)), it should be in the folder "src/config" and there change the file "account.js".\
-
-In the config file, there are 2 really important things that must be changed first, here is what they mean\
-`username` The username you use to login to steam\
-`password` The password you use to login to steam
-
-Than there are sme addicinal thing you can config/change to make the idler work how you want it, and does are\
-`statusInvisible` If this is set to **true** it will show your account as offline instead of online\
-`randomIdleGames` If set to **true**, **listToIdle** won't be used and it will randomly idle games\
-`idleFreeGames` If set to **true** the **randomIdleGames** will includes free to play games\
-`parallelGameIdle` The number of games it should idle at ones if using **randomIdleGames** (can been between 0 and 32)\
-`staticIdleTime` If set to **0** it will create a random number, else it will use this number (number must be in MS)\
-`blacklist` A list of games you don't want to idle if using **randomIdleGames** (use game IDs here)\
-`SkipBannedGames` If set to **true** it won't idle games your banned in while using **randomIdleGames**\
-`listToIdle` Static list of games to idle, only gets used if **randomIdleGames** is **false**
-
-Hereunder is an example config:
-
-```
-accOptions: {
-	username: 'some username',
-	password: 'some password',
-	statusInvisible: false
-},
-idleOptions: {
-	randomIdleGames: true,
-	idleFreeGames: true,
-	parallelGameIdle: 1,
-	staticIdleTime: 0,
-	blacklist: [],
-	SkipBannedGames: false,
-	listToIdle: [ 730, 570, 440 ]
-}
-```
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/ZixeSea/SteamIdler/blob/master/LICENSE.md) file for details (deleting and/or modifying the license file after forking isn't allowed).
 
 ---
 
-## **Linux**
+# Table of contents
 
-> ⚠️ WARNING ⚠️<br>Everything in this section is based on a server running **Ubuntu 18.04 without GUI**, this bot and all commands mentioned here can be performed on another distro but the commands or steps may be slightly different.
+1. **[Prepare linux](#prepare-linux)**  
+   1.1 [Update server](#update-server)
+   1.2 [Install node.js](#install-nodejs)
+2. **[Prepare windows](#prepare-windows)**  
+   2.1 [Get node.js](#get-nodejs)
+3. **[Account config](#account-config)**  
+   3.1 [Information](#information)
+   3.2 [Add config](#add-config)
+4. **[Run idler](#run-idler)**  
+   4.1 [Install dependencies](#install-dependencies)
+   4.2 [Start program](#start-program)
 
-### **Update system (L)**
+---
 
-To make you get the most recent versions of any software you download, update your system first with the following command in a terminal window.
+# Prepare linux
+
+> Everything in this section is based on a host system running **Ubuntu 18.04/20.04/22.04**. Most if not all information can be used for other versions of Ubuntu (or dabian based distro's) as well, but it may require slight changes.
+
+## Update server
 
 ```
 sudo apt update && sudo apt upgrade -y
 ```
 
-### **Install Node.js (L)**
-
-Run the following 2 commands in a terminal window to install **Node.js**.
+## Install node.js
 
 ```
-curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 sudo apt install -y nodejs
+
+sudo npm i npm@9.6.1 -g
 ```
 
-### **Start the bot (L)**
+> The versions mentioned above can be outdated, always check [(this page)](https://nodejs.org/en/) for the most recent LTS version of node.js and check [(this page)](https://github.com/npm/cli/tags) for the most recent version of NPM. Installing outdated versions can create problems or security risks.
 
-Open the folder you downloaded in the previous step (["this one"](###Get-code)), and open a terminal window there and run the following 3 commands.
+---
+
+# Prepare windows
+
+> Everything in this section is based on a host system running **Windows 10/11**. Most if not all information can be used for other versions of Windows as well, but it may require slight changes.
+
+## Get node.js
+
+Installing **Node.js** on windows is really easy, they have an installer for it and you can download it on their website (so it's simply clicking "next" and "ok").\
+
+**Download link:** https://nodejs.org/en
+
+---
+
+# Account config
+
+## Information
+
+You can find the config file(s) in the config folder (`src/config`), every account that should idle also needs it's own config file. The name of the config file doesn't matter.
+
+**- account (REQUIRED)**
+`username` | String | The username from the steam account
+`username` | String | The username from the steam account
+`statusInvisible` | Boolean | If "true" friends will see notification
+**- idlerSettings**
+`parallelGameIdle` | Number | Number of games to play at ones (32 is max)
+`staticIdleTime` | Number | Time to idle until switching to other games (0 is random number)
+**- staticIdler**
+`enabled` | Boolean | If "true" it will idle the games in "listToIdle" (if "staticIdler" is also "true", it will use that one)
+`listToIdle` | Array | List of games to idle for "staticIdler" (example: [730, 570, 440])
+**- dynamicIdler**
+`enabled` | Boolean | If "true" it will idle the games in "dynamicIdler"
+`skipBannedGames` | Boolean | If "true" the idler "dynamicIdler" won't include game you're banned in"
+`skipFreeGames` | Boolean | If "true" the idler "dynamicIdler" won't include free games
+`blacklistGames` | Array | List of games not to idle in "dynamicIdler" (example: [730, 570, 440])
+
+## Add config
+
+If you want to add another account, created a new **.js** file in the config folder (`src/config`) and copy this in the file. Don't forget the add the necessary account information and settings.
 
 ```
-npm i
-node .
+module.exports = {
+  account: {
+    username: 'username',
+    password: 'password',
+    statusInvisible: false
+  },
+  idlerSettings: {
+    parallelGameIdle: 32,
+    staticIdleTime: 0
+  },
+  staticIdler: {
+    enabled: false,
+    listToIdle: []
+  },
+  dynamicIdler: {
+    enabled: false,
+    skipBannedGames: false,
+    skipFreeGames: false,
+    blacklistGames: []
+  }
+};
 ```
 
 ---
 
-## **Windows**
+# Run idler
 
-> ⚠️ WARNING ⚠️<br>Everything in this section is based on a server running **Windows 10**, this bot and all commands mentioned here can be performed on another Windows version but the commands or steps may be slightly different.
+## Install dependencies
 
-### **Install Node.js (W)**
-
-Installing **Node.js** on windows is really easy, they have a normal installer for it and you can download it on their website (so it's simply clicking "next" and "ok").\
-**Link:** https://nodejs.org/en
-
-### **Start the bot (W)**
-
-Open the folder you downloaded in the previous step (["this one"](###Get-code)), and open a CMD window there and run the following 3 commands.
+The program needs to get the required dependencies to work (see [dependencies](#dependencies)), you do this with the command below. Keep in mind that you need to run this in the folder `SteamIdler` in a CMD/terminal.
 
 ```
 npm i
+```
+
+## Start program
+
+Starting/running the program is the same for linux and windows, you can use the default node.js start command listed here. Keep in mind that you need to run this in the folder `SteamIdler` in a CMD/terminal.
+
+```
 node .
 ```
 
