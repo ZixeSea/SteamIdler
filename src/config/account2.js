@@ -2,7 +2,7 @@ module.exports = {
   account: {
     username: 'username', // Steam username
     password: 'password', // Steam password
-    statusInvisible: false // If set to "true" friends will get notifications
+    statusInvisible: false // If set to "true" friends won't see notification or you playing anything
   },
   idlerSettings: {
     parallelGameIdle: 32, // Amount of games playing at the same time (max is 32)
