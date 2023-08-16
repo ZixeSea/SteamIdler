@@ -27,8 +27,6 @@ module.exports = () => {
     await setTimeout(() => {
       return process.send({ name: 'login' });
     }, 5000);
-
-    process.send({ name: 'stats', account });
     client.setPersona(
       config.account.statusInvisible ? SteamUser.EPersonaState.Invisible : SteamUser.EPersonaState.Online
     );
@@ -63,7 +61,7 @@ module.exports = () => {
 
       statsPusher = setInterval(() => {
         return process.send({ name: 'stats', account });
-      }, 60000);
+      }, 20000);
 
       return logger.info(`The idler dynamicIdler will now be started for ${account.name}.`);
     }
@@ -95,7 +93,7 @@ module.exports = () => {
   });
 
   client.on('disconnected', (result, msg) => {
-    idler.stop(account);
+    if (idler) idler.stop(account);
     setTimeout(() => {
       clearInterval(statsPusher);
     }, 61000);
@@ -104,7 +102,7 @@ module.exports = () => {
   });
 
   client.on('error', (err) => {
-    idler.stop(account);
+    if (idler) idler.stop(account);
     setTimeout(() => {
       clearInterval(statsPusher);
     }, 61000);
@@ -114,6 +112,6 @@ module.exports = () => {
     }
 
     account.update({ status: 'Steam error' });
-    logger.error(`Steam error for ${account.name}: ${err}`);
+    logger.error(`Steam error for ${account.name}: ${err.message}`);
   });
 };
