@@ -14,6 +14,7 @@ module.exports = () => {
       case 'login':
         config = message.config;
         account = new Account({ name: config.account.username, status: 'Preparing' });
+        process.send({ name: 'stats', account });
         client.logOn({
           accountName: message.config.account.username,
           password: message.config.account.password
@@ -33,6 +34,7 @@ module.exports = () => {
 
     if (!config.staticIdler.enabled && !config.dynamicIdler.enabled) {
       account.update({ status: 'Not idling' });
+      process.send({ name: 'stats', account });
       return logger.warn(`Both idle options are turned off for ${account.name}, it will be online without idling`);
     }
 
@@ -59,6 +61,7 @@ module.exports = () => {
       idler = require('../idlers/dynamicIdler');
       idler.load(account, client, config);
 
+      process.send({ name: 'stats', account });
       statsPusher = setInterval(() => {
         return process.send({ name: 'stats', account });
       }, 20000);
@@ -69,15 +72,17 @@ module.exports = () => {
     if (config.staticIdler.enabled) {
       if (config.staticIdler.listToIdle.length < 1) {
         account.update({ status: 'Not idling' });
+        process.send({ name: 'stats', account });
         return logger.warn(`listToIdle but no games provided for ${account.name}, it won't idle.`);
       }
 
       idler = require('../idlers/staticIdler');
       idler.load(account, client, config);
 
+      process.send({ name: 'stats', account });
       statsPusher = setInterval(() => {
         return process.send({ name: 'stats', account });
-      }, 30000);
+      }, 5000);
 
       return logger.info(`The idler staticIdler will now be started for ${account.name}.`);
     }
@@ -96,7 +101,7 @@ module.exports = () => {
     if (idler) idler.stop(account);
     setTimeout(() => {
       clearInterval(statsPusher);
-    }, 61000);
+    }, 11000);
     account.update({ status: 'Disconnected' });
     logger.error(`${account.name} has disconnected, with reason: ${msg}`);
   });
@@ -105,7 +110,7 @@ module.exports = () => {
     if (idler) idler.stop(account);
     setTimeout(() => {
       clearInterval(statsPusher);
-    }, 61000);
+    }, 11000);
     if (err.message.includes('LoggedInElsewhere')) {
       account.update({ status: 'Session taken' });
       return logger.error(`Session from ${account.name} got taken from another location`);

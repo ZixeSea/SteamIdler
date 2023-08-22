@@ -3,7 +3,7 @@ const { startTimeToHours } = require('../utils/additional');
 
 module.exports = (stats) => {
   const t1 = new Table({
-    title: 'List Of Steam Accounts',
+    title: 'List Of Running Steam Accounts | SteamIdler By ZixeSea',
     columns: [
       { name: 'name', title: 'Username', alignment: 'left' },
       { name: 'list', title: 'Games list', alignment: 'right' },

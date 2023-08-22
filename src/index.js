@@ -11,15 +11,16 @@ if (cluster.isPrimary) {
     for (const Worker of manager.values()) {
       Worker.worker.send({ name: 'login', config: Worker.config });
       await new Promise((resolve, reject) => {
-        cluster.once('message', function (worker, message) {
+        cluster.on('message', function (worker, message) {
           if (worker.id === Worker.id && message.name === 'login') resolve();
+          if (message.name === 'stats') stats.set(worker, message.account);
         });
       });
     }
 
     setInterval(() => {
       bashboard(stats);
-    }, 30000);
+    }, 15000);
   };
 
   const evn = require('../package.json');
@@ -39,11 +40,6 @@ if (cluster.isPrimary) {
   );
 
   startWorkers();
-  cluster.on('message', (worker, message) => {
-    if (message.name === 'stats') {
-      stats.set(worker, message.account);
-    }
-  });
 } else {
   require('./sharding/worker')();
 }
