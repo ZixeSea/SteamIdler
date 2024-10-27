@@ -18,6 +18,7 @@
   },
   "main": "./src/index.js",
   "scripts": {
+    "start": "node ./src/index.js",
     "text": "node ./src/index.js"
   },
   "author": "ZixeSea",
@@ -26,6 +27,7 @@
     "asciiart-logo": "^0.2.7",
     "colors": "^1.4.0",
     "console-table-printer": "^2.11.2",
+    "steam-totp": "^2.1.2",
     "steam-user": "^5.0.2",
     "time-stamp": "^2.2.0"
   }
