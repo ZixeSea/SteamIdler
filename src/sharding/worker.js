@@ -1,5 +1,6 @@
 const logger = require('../utils/logger');
 const SteamUser = require('steam-user');
+const SteamTotp = require('steam-totp');
 const Account = require('../structures/Account');
 const client = new SteamUser();
 
@@ -17,7 +18,10 @@ module.exports = () => {
         process.send({ name: 'stats', account });
         client.logOn({
           accountName: message.config.account.username,
-          password: message.config.account.password
+          password: message.config.account.password,
+          machineName: 'SteamIdler',
+          rememberPassword: true,
+          twoFactorCode: message.config.account.shared_secret ? SteamTotp.generateAuthCode(message.config.account.shared_secret) : undefined,
         });
         break;
     }
