@@ -17,7 +17,7 @@ module.exports = new Promise((resolve, reject) => {
   try {
     globalConfig = require(join(join(basePath, '/config'), 'global.js'));
   } catch (error) {
-    logger.info('Global config not found, consider creating one to apply global settings');
+    logger.warn('Global config not found, consider creating one to apply global settings');
   }
 
   for (const configFile of configList) {
