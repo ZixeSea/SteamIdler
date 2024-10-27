@@ -4,7 +4,6 @@ module.exports = {
     password: 'password', // Steam password
     statusInvisible: false, // If set to "true" friends won't see notification or you playing anything
     shared_secret: '', // Auto 2FA login
-    identity_secret: '', // Trade confirmations
   },
   idlerSettings: {
     parallelGameIdle: 32, // Amount of games playing at the same time (max is 32)
