@@ -20,7 +20,6 @@ module.exports = () => {
           accountName: message.config.account.username,
           password: message.config.account.password,
           machineName: 'SteamIdler',
-          rememberPassword: true,
           twoFactorCode: message.config.account.shared_secret ? SteamTotp.generateAuthCode(message.config.account.shared_secret) : undefined,
         });
         break;
