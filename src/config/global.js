@@ -1,7 +1,8 @@
 /*
 GLOBAL CONFIGURATION
 
-These settings are global and will affect any accounts that do not have the setting specified
+These settings are global and will affect any accounts that do not have the setting specified in their specific account config file
+Include any of these in the account specific config file to override these settings
 */
 module.exports = {
   idlerSettings: {
