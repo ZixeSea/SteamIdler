@@ -28,6 +28,10 @@ module.exports = () => {
 
   client.on('loggedOn', async () => {
     logger.info(`Logged on to ${account.name}, preparing to idle`);
+    account.steamID = client.steamID.getSteamID64();
+    const persona = (await client.getPersonas([account.steamID]))?.personas?.[account.steamID];
+    account.displayName = persona?.player_name || account.name;
+    account.avatar = persona?.avatar_url_medium || 'https://avatars.cloudflare.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg';
     await setTimeout(() => {
       return process.send({ name: 'login' });
     }, 5000);
@@ -36,7 +40,7 @@ module.exports = () => {
     );
 
     if (!config.staticIdler.enabled && !config.dynamicIdler.enabled) {
-      account.update({ status: 'Not idling' });
+      account.update({ status: 'Not idling', idleMode: 'None' });
       process.send({ name: 'stats', account });
       return logger.warn(`Both idle options are turned off for ${account.name}, it will be online without idling`);
     }
@@ -61,6 +65,7 @@ module.exports = () => {
         logger.warn(`dynamicIdler and staticIdler is on for ${account.name}, picked dynamicIdler.`);
       }
 
+      account.update({ idleMode: 'Dynamic' });
       idler = require('../idlers/dynamicIdler');
       idler.load(account, client, config);
 
@@ -74,10 +79,12 @@ module.exports = () => {
 
     if (config.staticIdler.enabled) {
       if (config.staticIdler.listToIdle.length < 1) {
-        account.update({ status: 'Not idling' });
+        account.update({ status: 'Not idling', idleMode: 'None' });
         process.send({ name: 'stats', account });
         return logger.warn(`listToIdle but no games provided for ${account.name}, it won't idle.`);
       }
+
+      account.update({ idleMode: 'Static' });
 
       idler = require('../idlers/staticIdler');
       idler.load(account, client, config);
