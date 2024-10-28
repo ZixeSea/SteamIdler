@@ -27,30 +27,34 @@ const logToDiscord = (stats) => {
   stats.forEach((a) => {
     output.embeds.push({
       // TODO: generate color based on status
-      color: discordColors.online,
+      color: a.idleStatus !== 'Idling!' ? discordColors.error : discordColors.online,
       author: {
-        // TODO: get account username and avatar and steam ID/uri
-        name: a.name,
-        // url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFwJn6xwsA3Vql8bTgSXciDMgAxGBB_l_VdQ&s",
-        // icon_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFwJn6xwsA3Vql8bTgSXciDMgAxGBB_l_VdQ&s"
+        name: a.displayName ?? a.name,
+        url: `https://steamcommunity.com/profiles/${a.steamID}`,
+        icon_url: a.avatar,
       },
       fields: [
         { name: 'Games list', value: a.gamesCount, inline: true },
-        { name: 'Time idled', value: a.idleStartTime === NaN
-          ? 'Unknown'
-          : a.idleStatus !== 'Idling!'
-          ? `${startTimeToHours(a.stoppedIdleTime)} H`
-          : `${startTimeToHours(Date.now() - a.idleStartTime)} H`, inline: true },
-        { name: '\u200b', value: '\u200b', inline: true },
         { name: 'Games idled', value: a.gamesIdled, inline: true },
+        { name: '\u200b', value: '\u200b', inline: true },
+        {
+          name: a.idleStatus !== 'Idling!' ? 'Idle stopped' : 'Idle started',
+          value: a.idleStartTime === NaN
+            ? 'Unknown'
+            : a.idleStatus !== 'Idling!'
+              ? `<t:${Math.floor(a.stoppedIdleTime / 1000)}:R>`
+              : `<t:${Math.floor(a.idleStartTime / 1000)}:R>`,
+          inline: true
+        },
         { name: 'Idle rounds', value: a.idleRounds, inline: true },
         { name: '\u200b', value: '\u200b', inline: true },
-        { name: 'Status', value: a.idleStatus, inline: true }
+        { name: 'Idle mode', value: a.idleMode, inline: true },
+        { name: 'Status', value: a.idleStatus, inline: true },
       ],
-      timestamp: new Date().toISOString(),
       footer: {
         text: 'Last updated'
       },
+      timestamp: new Date().toISOString(),
     });
   });
 

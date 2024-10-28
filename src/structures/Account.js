@@ -13,11 +13,13 @@ class Account {
     this.idleStartTime = NaN;
     this.stoppedIdleTime = NaN;
     this.idleStatus = data.status;
+    this.idleMode = data.idleMode || 'None';
   }
 
   update(data) {
     if (data.time) this.idleStartTime = data.time;
     if (data.status) this.idleStatus = data.status;
+    if (data.idleMode) this.idleMode = data.idleMode;
   }
 
   setStoppedTime() {
