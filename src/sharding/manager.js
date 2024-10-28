@@ -11,7 +11,9 @@ const configPath = join(basePath, '/config');
 
 module.exports = new Promise((resolve, reject) => {
   // Skip any config filenames that are reserved
-  let configList = readdirSync(configPath).filter((file) => !reservedConfigFiles.includes(file));
+  let configList = readdirSync(configPath).filter(
+    (file) => !reservedConfigFiles.includes(file) && file.endsWith('.js')
+  );
 
   // Load our global config if it exists
   let globalConfig = {};
