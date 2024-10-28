@@ -18,5 +18,6 @@ module.exports = {
     skipBannedGames: false, // If "true" it won't idle games you're banned in
     skipFreeGames: false, // If "true" it won't idle free to play games
     blacklistGames: [] // List of games not to idle (example: [730, 570, 440])
-  }
+  },
+  discordWebhook: '', // Discord webhook to send stats to
 };
