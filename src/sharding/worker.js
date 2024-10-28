@@ -2,7 +2,12 @@ const logger = require('../utils/logger');
 const SteamUser = require('steam-user');
 const SteamTotp = require('steam-totp');
 const Account = require('../structures/Account');
-const client = new SteamUser();
+const client = new SteamUser({ renewRefreshTokens: true });
+
+const { join, resolve } = require('node:path');
+const basePath = resolve(join(__dirname, '../'));
+const configPath = join(basePath, '/config');
+const { readFileSync, writeFileSync } = require('fs');
 
 let idler;
 let statsPusher;
@@ -16,14 +21,29 @@ module.exports = () => {
         config = message.config;
         account = new Account({ name: config.account.username, status: 'Preparing' });
         process.send({ name: 'stats', account });
-        client.logOn({
-          accountName: message.config.account.username,
-          password: message.config.account.password,
-          machineName: 'SteamIdler',
-          twoFactorCode: message.config.account.shared_secret
-            ? SteamTotp.generateAuthCode(message.config.account.shared_secret)
-            : undefined
-        });
+
+        let logOnOptions = {};
+        try {
+          const refreshToken = readFileSync(`${configPath}/${message.config.account.username}.txt`)
+            .toString('utf8')
+            .trim();
+          logOnOptions = {
+            refreshToken,
+            machineName: 'SteamIdler'
+          };
+        } catch (errpr) {
+          // The error doesn't matter, normal login callback
+          logOnOptions = {
+            accountName: message.config.account.username,
+            password: message.config.account.password,
+            machineName: 'SteamIdler',
+            twoFactorCode: message.config.account.shared_secret
+              ? SteamTotp.generateAuthCode(message.config.account.shared_secret)
+              : undefined
+          };
+        }
+
+        client.logOn(logOnOptions);
         break;
     }
   });
@@ -109,6 +129,11 @@ module.exports = () => {
         ? `${account.name} doesn't have any game/vac bans.`
         : `${account.name} has ${bans} game/vac ban(s) [${gameIds.join(', ')}].`
     );
+  });
+
+  client.on('refreshToken', (token) => {
+    writeFileSync(`${configPath}/${config.account.username}.txt`, token);
+    logger.info(`Got new refresh token for ${account.name}.`);
   });
 
   client.on('disconnected', (result, msg) => {
