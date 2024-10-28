@@ -1,11 +1,10 @@
+/*
+GLOBAL CONFIGURATION
+
+These settings are global and will affect any accounts that do not have the setting specified in their specific account config file
+Include any of these in the account specific config file to override these settings
+*/
 module.exports = {
-  account: {
-    username: 'username', // Steam username
-    password: 'password', // Steam password
-    statusInvisible: false, // If set to "true" friends won't see notification or you playing anything
-    shared_secret: '', // Auto 2FA login
-  },
-  // Below settings are optional if they are supplied in the global config
   idlerSettings: {
     parallelGameIdle: 32, // Amount of games playing at the same time (max is 32)
     staticIdleTime: 0 // Number of min to idle for before switching (0 is random number)
