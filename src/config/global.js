@@ -23,5 +23,5 @@ module.exports = {
   /*
   These settings are not account specific, but for the program itself
   */
-  discordWebhook: '', // Discord webhook to send stats to
+  discordWebhook: '' // Discord webhook to send stats to
 };

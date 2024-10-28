@@ -19,9 +19,10 @@
 </a>
 </p>
 
-## Authors
+## Contributors
 
-- **ZixeSea** - _Lead developer_ - github: [ZixeSea](https://github.com/ZixeSea)
+- **ZixeSea** - github: [ZixeSea](https://github.com/ZixeSea)
+- **Danial** - github: [RedSparr0w](https://github.com/RedSparr0w)
 
 ## The project
 
@@ -103,7 +104,7 @@ sudo npm i npm@9.6.1 -g
 
 ## Get node.js
 
-Installing **Node.js** on windows is really easy, they have an installer for it and you can download it on their website (so it's simply clicking "next" and "ok").\
+Installing **Node.js** on windows is really easy, they have an installer for it and you can download it on their website (so it's simply clicking "next" and "ok").
 
 **Download link:** https://nodejs.org/en
 
@@ -115,21 +116,24 @@ Installing **Node.js** on windows is really easy, they have an installer for it 
 
 You can find the config file(s) in the config folder (`src/config`), every account that should idle also needs it's own config file. The name of the config file doesn't matter.
 
-**- account (REQUIRED)**
-`username` | String | The username from the steam account
-`username` | String | The username from the steam account
-`statusInvisible` | Boolean | If "true" friends won't see notification or you playing anything
-**- idlerSettings**
-`parallelGameIdle` | Number | Number of games to play at ones (32 is max)
-`staticIdleTime` | Number | Time to idle until switching to other games (0 is random number)
-**- staticIdler**
-`enabled` | Boolean | If "true" it will idle the games in "listToIdle" (if "staticIdler" is also "true", it will use that one)
-`listToIdle` | Array | List of games to idle for "staticIdler" (example: [730, 570, 440])
-**- dynamicIdler**
-`enabled` | Boolean | If "true" it will idle the games in "dynamicIdler"
-`skipBannedGames` | Boolean | If "true" the idler "dynamicIdler" won't include game you're banned in"
-`skipFreeGames` | Boolean | If "true" the idler "dynamicIdler" won't include free games
-`blacklistGames` | Array | List of games not to idle in "dynamicIdler" (example: [730, 570, 440])
+**- account (REQUIRED)**<br />
+`username` | String | The username from the steam account<br />
+`username` | String | The username from the steam account<br />
+`statusInvisible` | Boolean | If "true" friends won't see notification or you playing anything<br />
+
+**- idlerSettings**<br />
+`parallelGameIdle` | Number | Number of games to play at ones (32 is max)<br />
+`staticIdleTime` | Number | Time to idle until switching to other games (0 is random number)<br />
+
+**- staticIdler**<br />
+`enabled` | Boolean | If "true" it will idle the games in "listToIdle" (if "staticIdler" is also "true", it will use that one)<br />
+`listToIdle` | Array | List of games to idle for "staticIdler" (example: [730, 570, 440])<br />
+
+**- dynamicIdler**<br />
+`enabled` | Boolean | If "true" it will idle the games in "dynamicIdler"<br />
+`skipBannedGames` | Boolean | If "true" the idler "dynamicIdler" won't include game you're banned in"<br />
+`skipFreeGames` | Boolean | If "true" the idler "dynamicIdler" won't include free games<br />
+`blacklistGames` | Array | List of games not to idle in "dynamicIdler" (example: [730, 570, 440])<br />
 
 ## Add config
 

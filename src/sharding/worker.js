@@ -20,7 +20,9 @@ module.exports = () => {
           accountName: message.config.account.username,
           password: message.config.account.password,
           machineName: 'SteamIdler',
-          twoFactorCode: message.config.account.shared_secret ? SteamTotp.generateAuthCode(message.config.account.shared_secret) : undefined,
+          twoFactorCode: message.config.account.shared_secret
+            ? SteamTotp.generateAuthCode(message.config.account.shared_secret)
+            : undefined
         });
         break;
     }
@@ -31,7 +33,9 @@ module.exports = () => {
     account.steamID = client.steamID.getSteamID64();
     const persona = (await client.getPersonas([account.steamID]))?.personas?.[account.steamID];
     account.displayName = persona?.player_name || account.name;
-    account.avatar = persona?.avatar_url_medium || 'https://avatars.cloudflare.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg';
+    account.avatar =
+      persona?.avatar_url_medium ||
+      'https://avatars.cloudflare.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_medium.jpg';
     await setTimeout(() => {
       return process.send({ name: 'login' });
     }, 5000);

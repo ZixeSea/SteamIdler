@@ -12,7 +12,7 @@ try {
 const discordColors = {
   online: parseInt('2ecc71', 16),
   offline: parseInt('95a5a6', 16),
-  error: parseInt('e74c3c', 16),
+  error: parseInt('e74c3c', 16)
 };
 
 const logToDiscord = (stats) => {
@@ -22,8 +22,8 @@ const logToDiscord = (stats) => {
   // Create our embeds
   output = {
     username: 'Steam Idler',
-    embeds: [],
-  }
+    embeds: []
+  };
   stats.forEach((a) => {
     output.embeds.push({
       // TODO: generate color based on status
@@ -31,7 +31,7 @@ const logToDiscord = (stats) => {
       author: {
         name: a.displayName ?? a.name,
         url: `https://steamcommunity.com/profiles/${a.steamID}`,
-        icon_url: a.avatar,
+        icon_url: a.avatar
       },
       fields: [
         { name: 'Status', value: a.idleStatus, inline: true },
@@ -39,20 +39,21 @@ const logToDiscord = (stats) => {
         { name: 'Games idled', value: a.gamesIdled, inline: true },
         {
           name: a.idleStatus !== 'Idling!' ? 'Idle stopped' : 'Idle started',
-          value: a.idleStartTime === NaN
-            ? 'Unknown'
-            : a.idleStatus !== 'Idling!'
+          value:
+            a.idleStartTime === NaN
+              ? 'Unknown'
+              : a.idleStatus !== 'Idling!'
               ? `<t:${Math.floor(a.stoppedIdleTime / 1000)}:R>`
               : `<t:${Math.floor(a.idleStartTime / 1000)}:R>`,
           inline: true
         },
         { name: 'Idle mode', value: a.idleMode, inline: true },
-        { name: 'Idle rounds', value: a.idleRounds, inline: true },
+        { name: 'Idle rounds', value: a.idleRounds, inline: true }
       ],
       footer: {
         text: 'Last updated'
       },
-      timestamp: new Date().toISOString(),
+      timestamp: new Date().toISOString()
     });
   });
 
@@ -62,19 +63,19 @@ const logToDiscord = (stats) => {
     method: discordMessageID ? 'PATCH' : 'POST',
     body: JSON.stringify(output),
     headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-    },
-  }).then((response) => {
-      return response.json()
+      'Content-type': 'application/json; charset=UTF-8'
+    }
+  })
+    .then((response) => {
+      return response.json();
     })
     .then((json) => {
       discordMessageID = json.id ?? discordMessageID;
     })
-    .catch(error => {
-        console.log(error)
-    })
-
-}
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 const logToConsole = (stats) => {
   const t1 = new Table({
@@ -112,4 +113,4 @@ const logToConsole = (stats) => {
 module.exports = (stats) => {
   logToConsole(stats);
   logToDiscord(stats);
-}
+};

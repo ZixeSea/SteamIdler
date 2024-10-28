@@ -3,7 +3,7 @@ module.exports = {
     username: 'username', // Steam username
     password: 'password', // Steam password
     statusInvisible: false, // If set to "true" friends won't see notification or you playing anything
-    shared_secret: '', // Auto 2FA login
+    shared_secret: '' // Auto 2FA login
   },
   // Below settings are optional if they are supplied in the global config
   idlerSettings: {
