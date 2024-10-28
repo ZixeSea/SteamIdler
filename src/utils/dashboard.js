@@ -50,6 +50,7 @@ const logToDiscord = (stats) => {
         { name: '\u200b', value: '\u200b', inline: true },
         { name: 'Idle mode', value: a.idleMode, inline: true },
         { name: 'Status', value: a.idleStatus, inline: true },
+        { name: '\u200b', value: '\u200b', inline: true },
       ],
       footer: {
         text: 'Last updated'
