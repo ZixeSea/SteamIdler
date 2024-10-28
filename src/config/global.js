@@ -1,10 +1,11 @@
 /*
 GLOBAL CONFIGURATION
-
-These settings are global and will affect any accounts that do not have the setting specified in their specific account config file
-Include any of these in the account specific config file to override these settings
 */
 module.exports = {
+  /*
+  These settings are global and will affect any accounts that do not have the setting specified in their specific account config file
+  Include any of these in the account specific config file to override these settings
+  */
   idlerSettings: {
     parallelGameIdle: 32, // Amount of games playing at the same time (max is 32)
     staticIdleTime: 0 // Number of min to idle for before switching (0 is random number)
@@ -19,5 +20,8 @@ module.exports = {
     skipFreeGames: false, // If "true" it won't idle free to play games
     blacklistGames: [] // List of games not to idle (example: [730, 570, 440])
   },
+  /*
+  These settings are not account specific, but for the program itself
+  */
   discordWebhook: '', // Discord webhook to send stats to
 };

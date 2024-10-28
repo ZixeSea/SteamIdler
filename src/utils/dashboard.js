@@ -37,7 +37,6 @@ const logToDiscord = (stats) => {
         { name: 'Status', value: a.idleStatus, inline: true },
         { name: 'Games list', value: a.gamesCount, inline: true },
         { name: 'Games idled', value: a.gamesIdled, inline: true },
-        { name: 'Idle mode', value: a.idleMode, inline: true },
         {
           name: a.idleStatus !== 'Idling!' ? 'Idle stopped' : 'Idle started',
           value: a.idleStartTime === NaN
@@ -47,6 +46,7 @@ const logToDiscord = (stats) => {
               : `<t:${Math.floor(a.idleStartTime / 1000)}:R>`,
           inline: true
         },
+        { name: 'Idle mode', value: a.idleMode, inline: true },
         { name: 'Idle rounds', value: a.idleRounds, inline: true },
       ],
       footer: {
