@@ -1,5 +1,6 @@
 const cluster = require('node:cluster');
-const bashboard = require('./utils/dashboard');
+const terminalOutput = require('./outputs/terminal');
+const discordOutput = require('./outputs/discord');
 const stats = new Map();
 
 process.on('unhandledRejection', (err) => console.error(`Unhandled error: ${err.message}`, err.stack));
@@ -18,8 +19,10 @@ if (cluster.isPrimary) {
       });
     }
 
+    // start outputs
     setInterval(() => {
-      bashboard(stats);
+      terminalOutput(stats);
+      discordOutput(stats);
     }, 15000);
   };
 
