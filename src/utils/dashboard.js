@@ -34,9 +34,10 @@ const logToDiscord = (stats) => {
         icon_url: a.avatar,
       },
       fields: [
+        { name: 'Status', value: a.idleStatus, inline: true },
         { name: 'Games list', value: a.gamesCount, inline: true },
         { name: 'Games idled', value: a.gamesIdled, inline: true },
-        { name: '\u200b', value: '\u200b', inline: true },
+        { name: 'Idle mode', value: a.idleMode, inline: true },
         {
           name: a.idleStatus !== 'Idling!' ? 'Idle stopped' : 'Idle started',
           value: a.idleStartTime === NaN
@@ -47,10 +48,6 @@ const logToDiscord = (stats) => {
           inline: true
         },
         { name: 'Idle rounds', value: a.idleRounds, inline: true },
-        { name: '\u200b', value: '\u200b', inline: true },
-        { name: 'Idle mode', value: a.idleMode, inline: true },
-        { name: 'Status', value: a.idleStatus, inline: true },
-        { name: '\u200b', value: '\u200b', inline: true },
       ],
       footer: {
         text: 'Last updated'
