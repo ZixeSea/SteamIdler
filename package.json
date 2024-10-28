@@ -7,6 +7,10 @@
     {
       "name": "ZixeSea",
       "url": "https://github.com/ZixeSea"
+    },
+    {
+      "name": "Danial",
+      "url": "https://github.com/RedSparr0w"
     }
   ],
   "repository": {
@@ -26,9 +30,9 @@
   "dependencies": {
     "asciiart-logo": "^0.2.7",
     "colors": "^1.4.0",
-    "console-table-printer": "^2.11.2",
+    "console-table-printer": "^2.12.1",
     "steam-totp": "^2.1.2",
-    "steam-user": "^5.0.2",
+    "steam-user": "^5.2.0",
     "time-stamp": "^2.2.0"
   }
 }
