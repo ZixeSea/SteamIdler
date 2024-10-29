@@ -31,8 +31,16 @@ class Account {
     this.gamesIdled += games;
   }
 
-  loadGames(gamesList, blacklistGames) {
-    const excludeGamesList = !blacklistGames ? [] : [].concat(blacklistGames, this.gameBans);
+  loadGames(gamesList, skipBannedGames, blacklistGames) {
+    let excludeGamesList = [];
+    if (skipBannedGames && Array.isArray(this.gameBans)) {
+      excludeGamesList = this.gameBans;
+    }
+
+    if (Array.isArray(blacklistGames) && blacklistGames.length > 0) {
+      excludeGamesList = [].concat(excludeGamesList, blacklistGames);
+    }
+
     gamesList.forEach((g) => {
       if (!excludeGamesList.includes(g.appid)) {
         this.games.push(new Game(g));

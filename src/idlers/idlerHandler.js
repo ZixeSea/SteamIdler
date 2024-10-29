@@ -7,7 +7,7 @@ const loadIdler = async (account, client, config) => {
     const gameListToIdle = await client.getUserOwnedApps(client.steamID, {
       includePlayedFreeGames: !config.idlerSettings.skipFreeGames
     });
-    account.loadGames(gameListToIdle.apps, config.idlerSettings.blacklistGames);
+    account.loadGames(gameListToIdle.apps, config.idlerSettings.skipBannedGames, config.idlerSettings.blacklistGames);
   }
 
   startIdler(account, client, config);
