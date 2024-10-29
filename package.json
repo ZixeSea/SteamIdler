@@ -25,6 +25,9 @@
     "start": "node ./src/index.js",
     "text": "node ./src/index.js"
   },
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "author": "ZixeSea",
   "license": "MIT",
   "dependencies": {
