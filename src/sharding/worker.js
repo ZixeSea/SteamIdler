@@ -63,77 +63,63 @@ module.exports = () => {
       config.account.statusInvisible ? SteamUser.EPersonaState.Invisible : SteamUser.EPersonaState.Online
     );
 
-    if (!config.staticIdler.enabled && !config.dynamicIdler.enabled) {
+    if (!config.idlerSettings.enabled) {
       account.update({ status: 'Not idling', idleMode: 'None' });
       process.send({ name: 'stats', account });
-      return logger.warn(`Both idle options are turned off for ${account.name}, it will be online without idling`);
+      return logger.warn(`Idler is turned off for ${account.name}, it will be online without idling`);
     }
 
     if (config.idlerSettings.parallelGameIdle < 1) {
-      logger.warn(`Changed parallelGameIdle to 1 for ${account.name}, original input was incorrect.`);
+      logger.warn(`Changed parallelGameIdle to 1 for ${account.name}, original input was incorrect`);
       config.idlerSettings.parallelGameIdle = 1;
     }
 
     if (config.idlerSettings.parallelGameIdle > 32) {
-      logger.warn(`Changed parallelGameIdle to 32 for ${account.name}, original input was incorrect.`);
+      logger.warn(`Changed parallelGameIdle to 32 for ${account.name}, original input was incorrect`);
       config.idlerSettings.parallelGameIdle = 32;
     }
 
     if (config.idlerSettings.staticIdleTime < 5 && config.idlerSettings.staticIdleTime !== 0) {
-      logger.warn(`Changed staticIdleTime to 5 for ${account.name}, original input was to low.`);
+      logger.warn(`Changed staticIdleTime to 5 for ${account.name}, original input was to low`);
       config.idlerSettings.staticIdleTime = 5;
     }
 
-    if (config.dynamicIdler.enabled) {
-      if (config.staticIdler.enabled) {
-        logger.warn(`dynamicIdler and staticIdler is on for ${account.name}, picked dynamicIdler.`);
-      }
-
-      account.update({ idleMode: 'Dynamic' });
-      idler = require('../idlers/dynamicIdler');
-      idler.load(account, client, config);
-
-      process.send({ name: 'stats', account });
-      statsPusher = setInterval(() => {
-        return process.send({ name: 'stats', account });
-      }, 20000);
-
-      return logger.info(`The idler dynamicIdler will now be started for ${account.name}.`);
+    if (config.idlerSettings.staticIdleList.length > 32) {
+      logger.warn(`Removed overflowing games for ${account.name}, don't is staticIdleList for more than 32 games`);
+      config.idlerSettings.staticIdleList = config.idlerSettings.staticIdleList.slice(0, 32);
     }
 
-    if (config.staticIdler.enabled) {
-      if (config.staticIdler.listToIdle.length < 1) {
-        account.update({ status: 'Not idling', idleMode: 'None' });
-        process.send({ name: 'stats', account });
-        return logger.warn(`listToIdle but no games provided for ${account.name}, it won't idle.`);
-      }
-
-      account.update({ idleMode: 'Static' });
-
-      idler = require('../idlers/staticIdler');
-      idler.load(account, client, config);
-
-      process.send({ name: 'stats', account });
-      statsPusher = setInterval(() => {
-        return process.send({ name: 'stats', account });
-      }, 5000);
-
-      return logger.info(`The idler staticIdler will now be started for ${account.name}.`);
+    if (config.idlerSettings.staticIdleList.length > config.idlerSettings.parallelGameIdle) {
+      logger.warn(
+        `Changed parallelGameIdle to ${config.idlerSettings.staticIdleList.length} for ${account.name}, more games were listed in staticIdleList`
+      );
+      config.idlerSettings.parallelGameIdle = config.idlerSettings.staticIdleList.length;
     }
+
+    account.update({ idleMode: 'Dynamic' }); // Defaults to dynamic
+    idler = require('../idlers/idlerHandler');
+    idler.load(account, client, config);
+
+    process.send({ name: 'stats', account });
+    statsPusher = setInterval(() => {
+      return process.send({ name: 'stats', account });
+    }, 20000);
+
+    return logger.info(`The idler will now be started for ${account.name}`);
   });
 
   client.on('vacBans', (bans, gameIds) => {
     account.setBanned(gameIds);
     logger.info(
       bans === 0
-        ? `${account.name} doesn't have any game/vac bans.`
-        : `${account.name} has ${bans} game/vac ban(s) [${gameIds.join(', ')}].`
+        ? `${account.name} doesn't have any game/vac bans`
+        : `${account.name} has ${bans} game/vac ban(s) [${gameIds.join(', ')}]`
     );
   });
 
   client.on('refreshToken', (token) => {
     writeFileSync(`${configPath}/${config.account.username}.txt`, token);
-    logger.info(`Got new refresh token for ${account.name}.`);
+    logger.info(`Got new refresh token for ${account.name}`);
   });
 
   client.on('disconnected', (result, msg) => {
