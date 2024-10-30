@@ -80,7 +80,7 @@ module.exports = () => {
     }
 
     if (config.idlerSettings.idleTime < 5 && config.idlerSettings.idleTime !== 0) {
-      logger.warn(`Changed idleTime to 5 for ${account.name}, original input was to low`);
+      logger.warn(`Changed idleTime to 5 for ${account.name}, original input was too low`);
       config.idlerSettings.idleTime = 5;
     }
 
