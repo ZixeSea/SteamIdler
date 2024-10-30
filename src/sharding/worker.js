@@ -79,21 +79,21 @@ module.exports = () => {
       config.idlerSettings.parallelGameIdle = 32;
     }
 
-    if (config.idlerSettings.staticIdleTime < 5 && config.idlerSettings.staticIdleTime !== 0) {
-      logger.warn(`Changed staticIdleTime to 5 for ${account.name}, original input was to low`);
-      config.idlerSettings.staticIdleTime = 5;
+    if (config.idlerSettings.idleTime < 5 && config.idlerSettings.idleTime !== 0) {
+      logger.warn(`Changed idleTime to 5 for ${account.name}, original input was to low`);
+      config.idlerSettings.idleTime = 5;
     }
 
-    if (config.idlerSettings.staticIdleList.length > 32) {
-      logger.warn(`Removed overflowing games for ${account.name}, don't is staticIdleList for more than 32 games`);
-      config.idlerSettings.staticIdleList = config.idlerSettings.staticIdleList.slice(0, 32);
+    if (config.idlerSettings.alwaysIdleList.length > 32) {
+      logger.warn(`Removed overflowing games for ${account.name}, don't is alwaysIdleList for more than 32 games`);
+      config.idlerSettings.alwaysIdleList = config.idlerSettings.alwaysIdleList.slice(0, 32);
     }
 
-    if (config.idlerSettings.staticIdleList.length > config.idlerSettings.parallelGameIdle) {
+    if (config.idlerSettings.alwaysIdleList.length > config.idlerSettings.parallelGameIdle) {
       logger.warn(
-        `Changed parallelGameIdle to ${config.idlerSettings.staticIdleList.length} for ${account.name}, more games were listed in staticIdleList`
+        `Changed parallelGameIdle to ${config.idlerSettings.alwaysIdleList.length} for ${account.name}, more games were listed in alwaysIdleList`
       );
-      config.idlerSettings.parallelGameIdle = config.idlerSettings.staticIdleList.length;
+      config.idlerSettings.parallelGameIdle = config.idlerSettings.alwaysIdleList.length;
     }
 
     account.update({ idleMode: 'Dynamic' }); // Defaults to dynamic

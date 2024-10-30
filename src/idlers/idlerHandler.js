@@ -14,10 +14,10 @@ const loadIdler = async (account, client, config) => {
 };
 
 const startIdler = (account, client, config) => {
-  if (config.idlerSettings.staticIdleList.length === config.idlerSettings.parallelGameIdle) {
+  if (config.idlerSettings.alwaysIdleList.length === config.idlerSettings.parallelGameIdle) {
     account.update({ time: Date.now(), status: 'Idling!', idleMode: 'Static' });
-    account.addRound(config.idlerSettings.staticIdleList.length);
-    return client.gamesPlayed(config.idlerSettings.staticIdleList);
+    account.addRound(config.idlerSettings.alwaysIdleList.length);
+    return client.gamesPlayed(config.idlerSettings.alwaysIdleList);
   }
 
   if (account.games.length <= config.idlerSettings.parallelGameIdle) {
@@ -36,10 +36,10 @@ const startIdler = (account, client, config) => {
 
 const startDynamicIdler = (account, client, config) => {
   const idleLength =
-    config.idlerSettings.staticIdleTime !== 0 ? changeMinToMs(config.idlerSettings.staticIdleTime) : getIdleDuration();
+    config.idlerSettings.idleTime !== 0 ? changeMinToMs(config.idlerSettings.idleTime) : getIdleDuration();
   const listToIdle = gamePicker(
     account.games,
-    config.idlerSettings.staticIdleList,
+    config.idlerSettings.alwaysIdleList,
     config.idlerSettings.parallelGameIdle,
     idleLength
   );

@@ -126,11 +126,11 @@ You can find the config file(s) in the config folder (`src/config`), every accou
 **- idlerSettings**<br />
 `enabled` | Boolean | Turn idler on or off<br />
 `parallelGameIdle` | Number | Amount of games playing at the same time (max is 32)<br />
-`staticIdleTime` | Number | Number of min to idle for before switching games (0 means randomized number)<br />
-`staticIdleList` | Array | Games that will always be idled, example: [730, 570, 440]<br />
-`skipBannedGames` | Boolean | If "true" it won't idle games you're banned in (except if it's in "staticIdleList")<br />
-`skipFreeGames` | Boolean | If "true" it won't idle free to play games (except if it's in "staticIdleList")<br />
-`blacklistGames` | Array | List of games not to idle, example: [730, 570, 440] (except if it's in "staticIdleList")<br />
+`idleTime` | Number | Number of min to idle for before switching games (0 means randomized number)<br />
+`alwaysIdleList` | Array | Games that will always be idled, example: [730, 570, 440]<br />
+`skipBannedGames` | Boolean | If "true" it won't idle games you're banned in (except if it's in "alwaysIdleList")<br />
+`skipFreeGames` | Boolean | If "true" it won't idle free to play games (except if it's in "alwaysIdleList")<br />
+`blacklistGames` | Array | List of games not to idle, example: [730, 570, 440] (except if it's in "alwaysIdleList")<br />
 
 ## Add config
 
@@ -147,8 +147,8 @@ module.exports = {
   idlerSettings: {
     enabled: true,
     parallelGameIdle: 32,
-    staticIdleTime: 0,
-    staticIdleList: [],
+    idleTime: 0,
+    alwaysIdleList: [],
     skipBannedGames: false,
     skipFreeGames: false,
     blacklistGames: []
