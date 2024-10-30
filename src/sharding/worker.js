@@ -85,7 +85,7 @@ module.exports = () => {
     }
 
     if (config.idlerSettings.alwaysIdleList.length > 32) {
-      logger.warn(`Removed overflowing games for ${account.name}, don't is alwaysIdleList for more than 32 games`);
+      logger.warn(`Removed overflowing games for ${account.name}, alwaysIdleList can't be more than 32 games`);
       config.idlerSettings.alwaysIdleList = config.idlerSettings.alwaysIdleList.slice(0, 32);
     }
 
