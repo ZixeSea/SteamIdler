@@ -31,7 +31,7 @@ This project has been created in _2019_ for me to easily run a **steam idler 24/
 ## Requirements
 
 - `git` command line ([Windows](https://git-scm.com/download/win)|[Linux](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)|[MacOS](https://git-scm.com/download/mac)) installed
-- `node` version 8.0.0 or higher ([get here](https://nodejs.org))
+- `node` version 14.0.0 or higher ([get here](https://nodejs.org))
 
 > If you have 2AF on for you steam account, you need to provide it while the program is starting. A message will appear about it.
 
@@ -47,11 +47,12 @@ git clone https://github.com/ZixeSea/SteamIdler.git
 
 ## Dependencies
 
-- [steam-user](https://www.npmjs.com/package/steam-user) - Allows interaction with the Steam network via the Steam client protocol
-- [asciiart-logo](https://www.npmjs.com/package/asciiart-logo) - renders a splash screen in text console with logo from ASCII characters.
-- [colors](https://www.npmjs.com/package/colors) - get color and style in your node.js console
-- [console-table-printer](https://www.npmjs.com/package/console-table-printer) - Printing Simple Table with Coloring rows on your console. Its useful when you want to present some tables on console using js.
-- [time-stamp](https://www.npmjs.com/package/time-stamp) - Get a formatted timestamp.
+- [steam-user](https://www.npmjs.com/package/steam-user) - Used to interface with Steam.
+- [asciiart-logo](https://www.npmjs.com/package/asciiart-logo) - Used to create a splash screen in the console.
+- [colors](https://www.npmjs.com/package/colors) - Used to color and style console output.
+- [console-table-printer](https://www.npmjs.com/package/console-table-printer) - Used to create a table in the console.
+- [time-stamp](https://www.npmjs.com/package/time-stamp) - Used to format timestamps.
+- [steam-totp](https://github.com/DoctorMcKay/node-steam-totp) - Used to generate Steam auth codes.
 
 ## License
 
@@ -120,42 +121,34 @@ You can find the config file(s) in the config folder (`src/config`), every accou
 `username` | String | The username from the steam account<br />
 `username` | String | The username from the steam account<br />
 `statusInvisible` | Boolean | If "true" friends won't see notification or you playing anything<br />
+`shared_secret` | String | Auto 2FA login<br />
 
 **- idlerSettings**<br />
-`parallelGameIdle` | Number | Number of games to play at ones (32 is max)<br />
-`staticIdleTime` | Number | Time to idle until switching to other games (0 is random number)<br />
-
-**- staticIdler**<br />
-`enabled` | Boolean | If "true" it will idle the games in "listToIdle" (if "staticIdler" is also "true", it will use that one)<br />
-`listToIdle` | Array | List of games to idle for "staticIdler" (example: [730, 570, 440])<br />
-
-**- dynamicIdler**<br />
-`enabled` | Boolean | If "true" it will idle the games in "dynamicIdler"<br />
-`skipBannedGames` | Boolean | If "true" the idler "dynamicIdler" won't include game you're banned in"<br />
-`skipFreeGames` | Boolean | If "true" the idler "dynamicIdler" won't include free games<br />
-`blacklistGames` | Array | List of games not to idle in "dynamicIdler" (example: [730, 570, 440])<br />
+`enabled` | Boolean | Turn idler on or off<br />
+`parallelGameIdle` | Number | Amount of games playing at the same time (max is 32)<br />
+`idleTime` | Number | Number of min to idle for before switching games (0 means randomized number)<br />
+`alwaysIdleList` | Array | Games that will always be idled, example: [730, 570, 440]<br />
+`skipBannedGames` | Boolean | If "true" it won't idle games you're banned in (except if it's in "alwaysIdleList")<br />
+`skipFreeGames` | Boolean | If "true" it won't idle free to play games (except if it's in "alwaysIdleList")<br />
+`blacklistGames` | Array | List of games not to idle, example: [730, 570, 440] (except if it's in "alwaysIdleList")<br />
 
 ## Add config
 
-If you want to add another account, created a new **.js** file in the config folder (`src/config`) and copy this in the file. Don't forget the add the necessary account information and settings.
+If you want to add another account, created a new **.js** file (name doesn't matter) in the config folder (`src/config`) and copy this in the file. Don't forget the add the necessary account information and settings.
 
 ```
 module.exports = {
   account: {
     username: 'username',
     password: 'password',
-    statusInvisible: false
+    statusInvisible: false,
+    shared_secret: ''
   },
   idlerSettings: {
+    enabled: true,
     parallelGameIdle: 32,
-    staticIdleTime: 0
-  },
-  staticIdler: {
-    enabled: false,
-    listToIdle: []
-  },
-  dynamicIdler: {
-    enabled: false,
+    idleTime: 0,
+    alwaysIdleList: [],
     skipBannedGames: false,
     skipFreeGames: false,
     blacklistGames: []

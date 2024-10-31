@@ -1,6 +1,6 @@
 {
   "name": "steam-idler",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "This is a small steam idle bot made with steam-user.",
   "homepage": "https://github.com/ZixeSea/SteamIdler",
   "contributors": [
@@ -24,6 +24,9 @@
   "scripts": {
     "start": "node ./src/index.js",
     "text": "node ./src/index.js"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   },
   "author": "ZixeSea",
   "license": "MIT",
